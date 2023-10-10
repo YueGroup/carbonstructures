@@ -3,7 +3,7 @@ requires = ["setuptools >= 42"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "template"
+name = "carbon-structures"
 description="A Python package description goes here."
 version = "0.0.1"
 readme = "README.md"
@@ -38,10 +38,10 @@ docs = [
 ]
 
 [tool.setuptools.package-data]
-template = ["py.typed"]
+carbon-structures = ["py.typed"]
 
 [tool.pyright]
-include = ["template"]
+include = ["carbon-structures"]
 exclude = ["**/__pycache__"]
 
 [tool.pytest.ini_options]
@@ -117,7 +117,7 @@ exclude = []
 flake8-unused-arguments.ignore-variadic-names = true
 extend-exclude = ["tests"]
 pydocstyle.convention = "numpy"
-isort.known-first-party = ["template"]
+isort.known-first-party = ["carbon-structures"]
 
 [tool.mypy]
 ignore_missing_imports = true
