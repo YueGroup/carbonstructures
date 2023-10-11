@@ -91,6 +91,10 @@ class RectangularSheet(object):
                 if (((y_ind + 1) % 4 == 0 or y_ind % 4 == 0) and x_ind % 2) or 
                    (not ((y_ind + 1) % 4 == 0 or y_ind % 4 == 0) and not x_ind % 2)]
         
+        # remove excess coordinates
+        coordinates.remove((x_coordinates[len(x_coordinates) - 1], y_coordinates[0]))
+        coordinates.remove((x_coordinates[len(x_coordinates) - 1], y_coordinates[len(y_coordinates) - 1]))
+        
         return coordinates
                 
         
