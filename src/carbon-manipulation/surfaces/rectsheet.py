@@ -50,10 +50,13 @@ class RectangularSheet(object):
 
         if (self.hex_x <= 0) or (self.hex_y <= 0): 
             raise Exception("Dimensions too small")
+
+        carbons_per_row = 1 + self.hex_x * 2
+        self.n_Cs = carbons_per_row * (self.hex_y + 1)
         
     def generate_coords(self, x=0.0, y=0.0):
         """
-        Returns an array of coordinates representing the rectangular graphene sheet
+        Returns an list of coordinates, in tuples (x,y), representing the rectangular graphene sheet
 
         Parameters: 
             x: bottom left corner x-coordinate (default 0.00)
