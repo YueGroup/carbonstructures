@@ -2,4 +2,4 @@
 
 Authors: Anthony Dee and Nhi Nguyen
 
-Description: Code for manipulating carbon structures
+Description: Code for manipulating carbon structures 
