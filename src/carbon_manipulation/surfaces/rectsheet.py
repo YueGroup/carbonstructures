@@ -39,14 +39,11 @@ class RectangularSheet(object):
 
         # hexagon unit lengths
         unit_x = 2.0 * self.CC_bond * cos(pi / 6.0)
-        unit_y = (1.0 + sin(pi / 0.6)) * self.CC_bond
+        unit_y = (1.0 + sin(pi / 6.0)) * self.CC_bond
 
         # calculate sheet dimensions in hexagonal units
         self.hex_x = (xlen - self.CC_bond * cos(pi / 6.0)) // unit_x
         self.hex_y = (ylen - self.CC_bond * sin(pi / 6.0)) // unit_y
-
-        if not self.hex_y % 2:
-            self.hex_y -= 1
 
         if (self.hex_x <= 0) or (self.hex_y <= 0): 
             raise Exception("Dimensions too small")
@@ -63,7 +60,7 @@ class RectangularSheet(object):
             y: bottom left corner y-coordinate (default 0.00)
         """
         # columns: number of unique x-coordinates
-        columns = 2 * self.hex_x + 1
+        columns = 2 * self.hex_x + 2
         # rows: number of unique y-coordinates
         rows = 2 * self.hex_y + 2
 
@@ -88,18 +85,25 @@ class RectangularSheet(object):
 
         # generate coordinates
         
+        print(x_coordinates)
+        print(y_coordinates)
+
         coordinates = [(x_coordinates[x_ind], y_coordinates[y_ind])
                 for y_ind in range(len(y_coordinates))
                 for x_ind in range(len(x_coordinates))
                 if (((y_ind + 1) % 4 == 0 or y_ind % 4 == 0) and x_ind % 2) or 
                    (not ((y_ind + 1) % 4 == 0 or y_ind % 4 == 0) and not x_ind % 2)]
-        
+    
         # remove excess coordinates
-        coordinates.remove((x_coordinates[len(x_coordinates) - 1], y_coordinates[0]))
-        coordinates.remove((x_coordinates[len(x_coordinates) - 1], y_coordinates[len(y_coordinates) - 1]))
         
-        return coordinates
-                
+        if self.hex_y % 2: 
+            coordinates.remove((x_coordinates[-1], 0))
+            coordinates.remove((x_coordinates[-1], y_coordinates[-1]))
+        else: 
+            coordinates.remove((x_coordinates[-1], 0))
+            coordinates.remove((0, y_coordinates[-1]))
+        print(len(coordinates))
+        return coordinates   
         
         # make list of columns/rows, form relevant tuples into a masterlist
         
