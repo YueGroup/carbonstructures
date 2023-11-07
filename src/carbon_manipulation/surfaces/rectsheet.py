@@ -14,7 +14,7 @@ class RectangularSheet(object):
     Instance attributes: 
         xlen [float]: total specified length in x-direction
         ylen [float]: total specified length in y-direction
-        CC_bond [float]: carbon-carbon boind length
+        CC_bond [float]: carbon-carbon bond length
         hex_x [int]: number of hexagons in the x-direction
         hex_y [int]: number of hexagons in the y-direction
 
@@ -102,8 +102,7 @@ class RectangularSheet(object):
         else: 
             coordinates.remove((x_coordinates[-1], 0))
             coordinates.remove((0, y_coordinates[-1]))
-        print(len(coordinates))
-        return coordinates   
+        return coordinates
         
         # make list of columns/rows, form relevant tuples into a masterlist
         
