@@ -1,5 +1,6 @@
 # import numpy as np
 from math import sin, cos, pi, asin
+import data
 
 # function to initiate a graphene sheet with size in xy-coordinate
 class CNT(object):
@@ -41,13 +42,65 @@ class CNT(object):
             self.hex_length = (length - self.CC_bond * sin(pi / 6.0)) // ((1.0 + sin(pi / 6.0)) * self.CC_bond)
             self.radius = (self.CC_bond * cos(pi / 6.0)) / sin(pi / self.ring_atoms)
         elif form == "armchair":
-            return "unfinished"
+            self.radius = diameter / 2
+            self.hex_length = (length - self.CC_bond * cos(pi / 6.0)) // (2 * self.CC_bond * cos(pi / 6.0))
         elif form == "chiral":
             return "unfinished"
         else: 
             raise Exception("Invalid form")
         
+    def rad_match(self, target):
+        #two lists, radius, inner angle
+        return 2
+    
+    def generate_coords_armchair(self, x=0.0, y=0.0, z=0.0, int_ang=0.0):
+        index = self.radmatch(self.radius)
+        atom_length = 2 * self.hexlength + 2
+        edges = index + 3
+        angle = data.angles[index]
+        shift = ((2 * pi) / edges) - angle
         
-    def generate_coords_armchair(self, x=0.0, y=0.0, z=0.0, angle=0.0):
+        # generate first circle of coordinates
+        c1ang = int_ang
+        c1 = [[self.radius * cos(c1ang),self.radius * sin(c1ang)]]
+        c1ind = 1
+        while c1ind < 2 * edges:
+            if c1ind % 2:
+                c1ang += shift
+            else:
+                c1ang += angle
+            c1.append([self.radius * cos(c1ang),self.radius * sin(c1ang)])
+            c1ind += 1
+        
+        # generate second circle of coordinates
+        c2ang = int_ang + pi / edges
+        c2 = [[self.radius * cos(c2ang),self.radius * sin(c2ang)]]
+        c2ind = 1
+        while c2ind < 2 * edges:
+            if c2ind % 2:
+                c2ang += shift
+            else:
+                c2ang += angle
+            c2.append([self.radius * cos(c2ang),self.radius * sin(c2ang)])
+            c2ind += 1
+        
+        # generate z coordinates
+        z = []
+        z_ind = 0
+        while z_ind < atom_length:
+            z.append([z_ind * self.CC_bond * cos(pi / 6)])
+            z_ind +=1
+        
+        # attach coordinates
         coordinates = []
+        for i in range(len(z)):
+            if i % 2: 
+                temp = c1
+            else:
+                temp = c2
+            print(temp)
+            for j in range(len(temp)):
+                coordinates.append(tuple(temp[j] + z[i]))
+                # note, to add instead x/y, modify where it is being added to the list
+             
         return coordinates

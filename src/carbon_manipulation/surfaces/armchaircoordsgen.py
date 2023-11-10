@@ -1,4 +1,5 @@
 from math import sin, pi, cos
+import scipy.optimize
 
 def rad(edges):
     n = edges
