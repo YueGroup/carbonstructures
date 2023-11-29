@@ -49,11 +49,12 @@ class CNT(object):
         else: 
             raise Exception("Invalid form")
         
-    def rad_match(self, target):
+    def radmatch(self, target):
         #two lists, radius, inner angle
         return 2
     
     def generate_coords_armchair(self, x=0.0, y=0.0, z=0.0, int_ang=0.0):
+        # takes index from 
         index = self.radmatch(self.radius)
         atom_length = 2 * self.hexlength + 2
         edges = index + 3
@@ -89,7 +90,7 @@ class CNT(object):
         z_ind = 0
         while z_ind < atom_length:
             z.append([z_ind * self.CC_bond * cos(pi / 6)])
-            z_ind +=1
+            z_ind += 1
         
         # attach coordinates
         coordinates = []

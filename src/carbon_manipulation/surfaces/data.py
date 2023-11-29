@@ -1,2 +1,2 @@
 radii = []
-angles = []
+angles = [0.]
