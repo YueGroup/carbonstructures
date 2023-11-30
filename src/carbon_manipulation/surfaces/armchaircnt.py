@@ -1,6 +1,7 @@
 # import numpy as np
 from math import sin, cos, pi, asin
 from data import radii, angles
+import copy
 
 # function to initiate a graphene sheet with size in xy-coordinate
 class CNT(object):
@@ -52,10 +53,11 @@ class CNT(object):
                 ind = index
         return ind
     
-    def generate_coords_armchair(self, axis = "z", int_ang=0.0):
+    def generate_coords_armchair(self, axis_index = 0, int_ang=0.0):
         # takes index from 
         index = self.radmatch(self.radius)
-        atom_length = 2 * self.hexlength + 2
+        tube_length = (2 * self.hexlength + 1) * self.CC_bond * cos(pi / 6.0)
+        half = (tube_length / 2)
         edges = index + 3
         angle = angles[index]
         shift = ((2 * pi) / edges) - angle
@@ -84,23 +86,25 @@ class CNT(object):
             c2.append([self.radius * cos(c2ang),self.radius * sin(c2ang)])
             c2ind += 1
         
-        # generate z coordinates
-        z = []
-        z_ind = 0
-        while z_ind < atom_length:
-            z.append([z_ind * self.CC_bond * cos(pi / 6)])
-            z_ind += 1
+        # generate axis coordinates
+        axis = []
+        axis_coord = -half
+        while axis_coord <= half + 1:
+            axis.append([axis_coord])
+            axis_coord += self.CC_bond * cos(pi / 6.0)
         
         # attach coordinates
         coordinates = []
-        for i in range(len(z)):
+        for i in range(len(axis)):
             if i % 2: 
-                temp = c1
+                temp = copy.deepcopy(c1)
             else:
-                temp = c2
+                temp = copy.deepcopy(c2)
             print(temp)
             for j in range(len(temp)):
-                coordinates.append(tuple(temp[j] + z[i]))
+                temp[j].insert(axis_index, axis[i])
+            for k in temp:
+                coordinates.append(tuple(k))
                 # note, to add instead x/y, modify where it is being added to the list
              
         return coordinates
