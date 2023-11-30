@@ -1,6 +1,6 @@
 # import numpy as np
 from math import sin, cos, pi, asin
-import data
+from data import radii, angles
 
 # function to initiate a graphene sheet with size in xy-coordinate
 class CNT(object):
@@ -24,7 +24,7 @@ class CNT(object):
         provide the closest estimate that is smaller than the specified parameters
     """
 
-    def __init__(self, length, diameter, form="zigzag"): 
+    def __init__(self, length, diameter): 
         """
         Creates a Carbon Nanotube (CNT) instance:
             generated sheet is a VALID structure (no partial hexagons)
@@ -34,31 +34,30 @@ class CNT(object):
             form must be zigzag (default), armchair, or chiral (to be added later)
             length and diameter must be floats
         """
-        self.form = form
         self.length = length
         self.CC_bond = 1.41
-        if form == "zigzag":
-            self.ring_atoms = pi // asin((2 * self.CC_bond * cos(pi / 6.0)) / diameter)
-            self.hex_length = (length - self.CC_bond * sin(pi / 6.0)) // ((1.0 + sin(pi / 6.0)) * self.CC_bond)
-            self.radius = (self.CC_bond * cos(pi / 6.0)) / sin(pi / self.ring_atoms)
-        elif form == "armchair":
-            self.radius = diameter / 2
-            self.hex_length = (length - self.CC_bond * cos(pi / 6.0)) // (2 * self.CC_bond * cos(pi / 6.0))
-        elif form == "chiral":
-            return "unfinished"
-        else: 
-            raise Exception("Invalid form")
+        self.radius = diameter / 2
+        self.hex_length = (length - self.CC_bond * cos(pi / 6.0)) // (2 * self.CC_bond * cos(pi / 6.0))
         
     def radmatch(self, target):
-        #two lists, radius, inner angle
-        return 2
+        # linear scan through radii list to match the index of the closest-fitting radius. The smaller value
+        # wins out in the case of a tie. 
+        # working on replacing with binary search/match
+        diff = abs(radii[0] - target)
+        ind = 0
+        for index in range(len(radii)):
+            temp = abs(radii[index] - target)
+            if temp < diff:
+                diff = temp
+                ind = index
+        return ind
     
-    def generate_coords_armchair(self, x=0.0, y=0.0, z=0.0, int_ang=0.0):
+    def generate_coords_armchair(self, axis = "z", int_ang=0.0):
         # takes index from 
         index = self.radmatch(self.radius)
         atom_length = 2 * self.hexlength + 2
         edges = index + 3
-        angle = data.angles[index]
+        angle = angles[index]
         shift = ((2 * pi) / edges) - angle
         
         # generate first circle of coordinates
