@@ -4,7 +4,7 @@ from data import radii, angles
 import copy
 
 # function to initiate a graphene sheet with size in xy-coordinate
-class CNT(object):
+class ArmCNT(object):
     """
     Functions for initializing, generating coordinates for, and functionalizing rectangular graphene sheets
 
@@ -31,31 +31,44 @@ class CNT(object):
             generated sheet is a VALID structure (no partial hexagons)
             generated sheet has x- and y-lengths LESS THAN OR EQUAL TO xlen and ylen
 
-        Preconditions:  
-            form must be zigzag (default), armchair, or chiral (to be added later)
+        Preconditions: 
             length and diameter must be floats
         """
+        # set CNT tube length, CC_bond length, radius, hexagonal tube length
         self.length = length
         self.CC_bond = 1.41
         self.radius = diameter / 2
         self.hex_length = (length - self.CC_bond * cos(pi / 6.0)) // (2 * self.CC_bond * cos(pi / 6.0))
         
     def radmatch(self, target):
-        # linear scan through radii list to match the index of the closest-fitting radius. The smaller value
-        # wins out in the case of a tie. 
-        # working on replacing with binary search/match
+        """
+        Scans lists from data.py for the closest fitting radii to the target:
+            in the (rare) case of two equally close-fitting radii, the smaller tube will be chosen
+            scanning is linear (O(N)) for now - working on inputting binary search
+        
+        Preconditions:
+            target must be a float
+        """
+
+        # calculate starting difference between radius and target
         diff = abs(radii[0] - target)
+        # set index to be returned by this function (matching radius/angle by index)
         ind = 0
+        # run through list of radii
         for index in range(len(radii)):
+            # recalculate difference between list radius and target
             temp = abs(radii[index] - target)
+            # replace difference and index if difference is smaller than before
             if temp < diff:
                 diff = temp
                 ind = index
         return ind
     
     def generate_coords_armchair(self, axis_index = 0, int_ang=0.0):
-        # takes index from 
+        # take index of closest-fitting radius with radmatch
         index = self.radmatch(self.radius)
+        # calculate useful values: tube length, half of tube length, number of edges, 
+        # separation angle, angular shift
         tube_length = (2 * self.hexlength + 1) * self.CC_bond * cos(pi / 6.0)
         half = (tube_length / 2)
         edges = index + 3
@@ -90,7 +103,7 @@ class CNT(object):
         axis = []
         axis_coord = -half
         while axis_coord <= half + 1:
-            axis.append([axis_coord])
+            axis.append(axis_coord)
             axis_coord += self.CC_bond * cos(pi / 6.0)
         
         # attach coordinates
@@ -105,6 +118,5 @@ class CNT(object):
                 temp[j].insert(axis_index, axis[i])
             for k in temp:
                 coordinates.append(tuple(k))
-                # note, to add instead x/y, modify where it is being added to the list
              
         return coordinates

@@ -4,3 +4,13 @@
 
 # dimensions in terms of hexagons
 # 
+
+
+# input parameters: 
+# 
+
+# steps
+# generate cnt
+
+
+#
