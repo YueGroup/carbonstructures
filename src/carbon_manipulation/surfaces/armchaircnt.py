@@ -70,7 +70,7 @@ class ArmCNT(object):
         radius = radii[index]
         # calculate useful values: tube length, half of tube length, number of edges, 
         # separation angle, angular shift
-        tube_length = (2 * self.hexlength + 1) * self.CC_bond * cos(pi / 6.0)
+        tube_length = (2 * self.hex_length + 1) * self.CC_bond * cos(pi / 6.0)
         half = (tube_length / 2)
         edges = index + 3
         angle = angles[index]
