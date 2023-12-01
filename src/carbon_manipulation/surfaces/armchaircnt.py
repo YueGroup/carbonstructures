@@ -67,6 +67,7 @@ class ArmCNT(object):
     def generate_coords_armchair(self, axis_index = 0, int_ang=0.0):
         # take index of closest-fitting radius with radmatch
         index = self.radmatch(self.radius)
+        radius = radii[index]
         # calculate useful values: tube length, half of tube length, number of edges, 
         # separation angle, angular shift
         tube_length = (2 * self.hexlength + 1) * self.CC_bond * cos(pi / 6.0)
@@ -77,26 +78,26 @@ class ArmCNT(object):
         
         # generate first circle of coordinates
         c1ang = int_ang
-        c1 = [[self.radius * cos(c1ang),self.radius * sin(c1ang)]]
+        c1 = [[radius * cos(c1ang),radius * sin(c1ang)]]
         c1ind = 1
         while c1ind < 2 * edges:
             if c1ind % 2:
                 c1ang += shift
             else:
                 c1ang += angle
-            c1.append([self.radius * cos(c1ang),self.radius * sin(c1ang)])
+            c1.append([radius * cos(c1ang),radius * sin(c1ang)])
             c1ind += 1
         
         # generate second circle of coordinates
         c2ang = int_ang + pi / edges
-        c2 = [[self.radius * cos(c2ang),self.radius * sin(c2ang)]]
+        c2 = [[radius * cos(c2ang),radius * sin(c2ang)]]
         c2ind = 1
         while c2ind < 2 * edges:
             if c2ind % 2:
                 c2ang += shift
             else:
                 c2ang += angle
-            c2.append([self.radius * cos(c2ang),self.radius * sin(c2ang)])
+            c2.append([radius * cos(c2ang),radius * sin(c2ang)])
             c2ind += 1
         
         # generate axis coordinates
