@@ -2,9 +2,9 @@
 from math import sin, cos, pi, asin
 
 # function to initiate a CNT with size in xyz-coordinate
-class CNT(object):
+class ZigCNT(object):
     """
-    Functions for initializing, generating coordinates for, and functionalizing rectangular graphene sheets
+    Functions for initializing, generating coordinates for, and functionalizing zigzag CNTs
 
     Notation notes: 
         the form parameter indicates the direction in which the carbon nanotube has been rolled. "armchair/zigzag" indicate the type
@@ -23,7 +23,7 @@ class CNT(object):
         provide the closest estimate that is smaller than the specified parameters
     """
 
-    def __init__(self, length, diameter, form="zigzag"): 
+    def __init__(self, length, diameter): 
         """
         Creates a Carbon Nanotube (CNT) instance:
             generated sheet is a VALID structure (no partial hexagons)
@@ -33,19 +33,19 @@ class CNT(object):
             form must be zigzag (default), armchair, or chiral (to be added later)
             length and diameter must be floats
         """
-        self.form = form
+        # self.form = form
         self.length = length
         self.CC_bond = 1.41
-        if form == "zigzag":
-            self.ring_atoms = pi // asin((2 * self.CC_bond * cos(pi / 6.0)) / diameter)
-            self.hex_length = (length - self.CC_bond * sin(pi / 6.0)) // ((1.0 + sin(pi / 6.0)) * self.CC_bond)
-            self.radius = (self.CC_bond * cos(pi / 6.0)) / sin(pi / self.ring_atoms)
-        elif form == "armchair":
-            return "unfinished"
-        elif form == "chiral":
-            return "unfinished"
-        else: 
-            raise Exception("Invalid form")
+        #if form == "zigzag":
+        self.ring_atoms = pi // asin((2 * self.CC_bond * cos(pi / 6.0)) / diameter)
+        self.hex_length = (length - self.CC_bond * sin(pi / 6.0)) // ((1.0 + sin(pi / 6.0)) * self.CC_bond)
+        self.radius = (self.CC_bond * cos(pi / 6.0)) / sin(pi / self.ring_atoms)
+        # elif form == "armchair":
+        #     return "unfinished"
+        # elif form == "chiral":
+        #     return "unfinished"
+        # else: 
+        #     raise Exception("Invalid form")
         
     def axial_circle(self, z=0.0, axis="aligned"):
         """
