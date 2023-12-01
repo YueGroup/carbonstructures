@@ -11,7 +11,7 @@
 
 # steps
 # generate cnt
-from math import sin,cos,pi
+from math import sin,cos,pi,sqrt
 import armchaircnt
 import zigzagcnt
 import rectsheet
@@ -50,7 +50,26 @@ class Piston(object):
             self.cnt = "unfinished"
         self.sheetL = rectsheet.RectangularSheet(xlen,ylen)
         self.sheetR = rectsheet.RectangularSheet(xlen,ylen)
-
+        self.radius = diameter / 2
+    
+    def poke(self, coordinates):
+        # coordinates is a list of atom coordinates in the graphene sheet. For now
+        # we assume we are on the x,y-plane
+        for index in range(len(coordinates)):
+            # convert from tuple to list
+            coordinates[index] = list(coordinates[index])
+        
+        new_coords = []
+        for coordinate in coordinates:
+            if sqrt(coordinate[0] ** 2 + coordinate[1] ** 2) > self.radius:
+                new_coords.append(coordinate)
+        
+        for index2 in range(len(new_coords)):
+            # convert from tuple to list
+            new_coords[index2] = tuple(new_coords[index2])
+            
+        return new_coords
+    
     def generate_coords_piston(self, x=0.0, y=0.0, z=0.0, dist_left=0.0, dist_right=0.0):
         """
         Returns an list of coordinates, in [x,y,z], representing the piston
