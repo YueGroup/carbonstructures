@@ -1,5 +1,5 @@
 # import numpy as np
-from math import sin, cos, pi, asin
+from math import sin, cos, pi, asin, floor
 
 # function to initiate a CNT with size in xyz-coordinate
 class ZigCNT(object):
@@ -26,20 +26,29 @@ class ZigCNT(object):
     def __init__(self, length, diameter): 
         """
         Creates a Carbon Nanotube (CNT) instance:
-            generated sheet is a VALID structure (no partial hexagons)
-            generated sheet has x- and y-lengths LESS THAN OR EQUAL TO xlen and ylen
+            generated CNT is a VALID structure (no partial hexagons)
+            generated CNT has length LESS THAN OR EQUAL TO input length
 
         Preconditions:  
             form must be zigzag (default), armchair, or chiral (to be added later)
             length and diameter must be floats
         """
-        # self.form = form
-        self.length = length
         self.CC_bond = 1.41
-        #if form == "zigzag":
+        
+        # humber of carbon atoms on one ring
         self.ring_atoms = pi // asin((2 * self.CC_bond * cos(pi / 6.0)) / diameter)
-        self.hex_length = (length - self.CC_bond * sin(pi / 6.0)) // ((1.0 + sin(pi / 6.0)) * self.CC_bond)
+
+        # number of hexagons spanning the length
+        self.hex_length = floor(4/3*length-2/3)
+
+        # radius of CNT (less than or equal input diameter/2)
         self.radius = (self.CC_bond * cos(pi / 6.0)) / sin(pi / self.ring_atoms)
+
+        # length of zigzag CNT (no partial hexagon)
+        self.length = self.hex_length*2*self.CC_bond - (self.hex_length-1)*0.5*self.CC_bond
+
+        #if form == "zigzag":
+        # self.hex_length = (length - self.CC_bond * sin(pi / 6.0)) // ((1.0 + sin(pi / 6.0)) * self.CC_bond)
         # elif form == "armchair":
         #     return "unfinished"
         # elif form == "chiral":
@@ -50,7 +59,7 @@ class ZigCNT(object):
     def axial_circle(self, z=0.0, axis="aligned"):
         """
         Returns an list of coordinates, in [x,y,z], representing the axial circle at a given z
-        Center circle will be at (0.0, 0.0, z)
+        Center of circle will be at (0.0, 0.0, z)
 
         Parameters: 
             z [float]: fixed z coords for all points in axial circle
@@ -66,7 +75,8 @@ class ZigCNT(object):
             shift = 0
         else:
             shift = angular/2
-
+    
+        angle = 0
         while angle+shift < 2*pi+shift:
             x = rad*cos(angle)
             y = rad*sin(angle) 
@@ -74,26 +84,27 @@ class ZigCNT(object):
             angle += angular
         return coords    
 
-    def generate_coords_zigzag(self, x=0.0, y=0.0, z=0.0, angle=0.0):
+    def generate_coords_zigzag(self, x=0.0, y=0.0, z=0.0):
         """
         Returns an list of coordinates, in [x,y,z], representing the zigzag cnt
 
         Parameters: 
-            x, y, z [float]: axial center of CNT; grows out in positive x, y, z direction as specified
-            angle [float]: starting angle (in radians) with respect to plane
+            x, y, z [float]: axial center of CNT, grows out in symmetrical left and right z direction
         """
         if not self.form == "zigzag":
             raise Exception("Wrong generation function for this shape")
 
         # generate coords for CNT with one unit hexagon in length at a time
         coords =[]
-        z1 = 0.0 #topmost z-coord
-        while z1 <= self.length - 2*self.CC_bond:
+        z1 = z #outmost z-coord
+        # highest possible z-coord for axial circle
+        max_z = self.length - 2*self.CC_bond - z
+        while z1 <= max_z:
             top = self.axial_circle(z=z1,axis="aligned")
             bot = self.axial_circle(z=z1+2*self.CC_bond,axis="aligned")
             side1 = self.axial_circle(z=z1+0.5*self.CC_bond,axis="shifted")
             side2 = self.axial_circle(z=z1+1.5*self.CC_bond,axis="shifted")
-            coords = top+side1+side2+bot
+            coords += top+side1+side2+bot
             z1 += 3*self.CC_bond
         return coords
 

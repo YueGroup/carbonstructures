@@ -32,9 +32,6 @@ class RectangularSheet(object):
         Preconditions: 
             xlen, ylen are floats
         """
-        # set xlen, ylen, CC_bond variables
-        self.xlen = xlen
-        self.ylen = ylen
         self.CC_bond = 1.41
 
         # hexagon unit lengths
@@ -45,19 +42,24 @@ class RectangularSheet(object):
         self.hex_x = (xlen - self.CC_bond * cos(pi / 6.0)) // unit_x
         self.hex_y = (ylen - self.CC_bond * sin(pi / 6.0)) // unit_y
 
+        # length and width of sheet (no partial hexagons)
+        self.xlen = self.hex_x*unit_x+self.CC_bond * cos(pi / 6.0)
+        self.ylen = self.hex_y*unit_y+self.CC_bond * sin(pi / 6.0)
+
         if (self.hex_x <= 0) or (self.hex_y <= 0): 
             raise Exception("Dimensions too small")
 
         carbons_per_row = 1 + self.hex_x * 2
         self.n_Cs = carbons_per_row * (self.hex_y + 1)
         
-    def generate_coords(self, x=0.0, y=0.0):
+    def generate_coords(self, x=0.0, y=0.0, z=0.0):
         """
         Returns an list of coordinates, in tuples (x,y), representing the rectangular graphene sheet
 
         Parameters: 
             x: bottom left corner x-coordinate (default 0.00)
             y: bottom left corner y-coordinate (default 0.00)
+            z: z-coordinate of sheet (default 0.00)
         """
         # columns: number of unique x-coordinates
         columns = 2 * self.hex_x + 2
@@ -88,7 +90,7 @@ class RectangularSheet(object):
         print(x_coordinates)
         print(y_coordinates)
 
-        coordinates = [(x_coordinates[x_ind], y_coordinates[y_ind])
+        coordinates = [(x_coordinates[x_ind], y_coordinates[y_ind], z)
                 for y_ind in range(len(y_coordinates))
                 for x_ind in range(len(x_coordinates))
                 if (((y_ind + 1) % 4 == 0 or y_ind % 4 == 0) and x_ind % 2) or 
@@ -97,11 +99,11 @@ class RectangularSheet(object):
         # remove excess coordinates
         
         if self.hex_y % 2: 
-            coordinates.remove((x_coordinates[-1], 0))
-            coordinates.remove((x_coordinates[-1], y_coordinates[-1]))
+            coordinates.remove((x_coordinates[-1], 0,z))
+            coordinates.remove((x_coordinates[-1], y_coordinates[-1],z))
         else: 
-            coordinates.remove((x_coordinates[-1], 0))
-            coordinates.remove((0, y_coordinates[-1]))
+            coordinates.remove((x_coordinates[-1], 0,z))
+            coordinates.remove((0, y_coordinates[-1],z))
         return coordinates
         
         # make list of columns/rows, form relevant tuples into a masterlist
