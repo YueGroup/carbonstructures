@@ -90,7 +90,7 @@ class RectangularSheet(object):
         print(x_coordinates)
         print(y_coordinates)
 
-        coordinates = [(x_coordinates[x_ind], y_coordinates[y_ind], z)
+        coordinates = [(x_coordinates[x_ind], y_coordinates[y_ind])
                 for y_ind in range(len(y_coordinates))
                 for x_ind in range(len(x_coordinates))
                 if (((y_ind + 1) % 4 == 0 or y_ind % 4 == 0) and x_ind % 2) or 
@@ -99,12 +99,16 @@ class RectangularSheet(object):
         # remove excess coordinates
         
         if self.hex_y % 2: 
-            coordinates.remove((x_coordinates[-1], 0,z))
-            coordinates.remove((x_coordinates[-1], y_coordinates[-1],z))
+            coordinates.remove((x_coordinates[-1], 0))
+            coordinates.remove((x_coordinates[-1], y_coordinates[-1]))
         else: 
-            coordinates.remove((x_coordinates[-1], 0,z))
-            coordinates.remove((0, y_coordinates[-1],z))
-        return coordinates
+            coordinates.remove((x_coordinates[-1], 0))
+            coordinates.remove((0, y_coordinates[-1]))
+
+        pos=[]
+        for coord in coordinates:
+            pos.append(coord+(z,))   
         
-        # make list of columns/rows, form relevant tuples into a masterlist
+        return pos
+        # need to change
         

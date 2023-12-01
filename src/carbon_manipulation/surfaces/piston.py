@@ -39,7 +39,7 @@ class Piston(object):
         provide the closest estimate that is smaller than the specified parameters
     """
     def __init__(self,form,cntlenght, diameter, xlen, ylen):
-        if not form == "zigzag" or "armchair" or "chiral":
+        if form not in ["zigzag", "armchair", "chiral"]:
             raise Exception("There is no such form of CNT")
         self.form = form
         if form == "zigzag":
@@ -62,7 +62,7 @@ class Piston(object):
         """
         # generate CNT coordinates
         if self.form == "zigzag":
-            coord_cnt = self.cnt.generate_coords_zigzag(x,y,z)
+            coord_cnt = self.cnt.generate_coords_zigzag(x,y,z-self.cnt.length*0.5)
         # elif self == "chiral":
         #     coord_cnt = self.cnt.generate_coords_armchair()
 

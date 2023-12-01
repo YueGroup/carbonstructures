@@ -80,7 +80,7 @@ class ZigCNT(object):
         while angle+shift < 2*pi+shift:
             x = rad*cos(angle)
             y = rad*sin(angle) 
-            coords.append[x,y,z]
+            coords.append([x,y,z])
             angle += angular
         return coords    
 
@@ -91,8 +91,6 @@ class ZigCNT(object):
         Parameters: 
             x, y, z [float]: axial center of CNT, grows out in symmetrical left and right z direction
         """
-        if not self.form == "zigzag":
-            raise Exception("Wrong generation function for this shape")
 
         # generate coords for CNT with one unit hexagon in length at a time
         coords =[]
