@@ -1,4 +1,4 @@
-# carbon-structures
+# carbonstructures
 
 Authors: Anthony Dee and Nhi Nguyen
 
