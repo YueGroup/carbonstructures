@@ -2,7 +2,7 @@
 from math import sin, cos, pi, asin, floor
 
 # function to initiate a CNT with size in xyz-coordinate
-class ZigCNT(object):
+class ZigzagCNT(object):
     """
     Functions for initializing, generating coordinates for, and functionalizing zigzag CNTs
 

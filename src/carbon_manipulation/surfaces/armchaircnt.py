@@ -1,10 +1,10 @@
 # import numpy as np
-from math import sin, cos, pi, asin
-from data import radii, angles
+from math import sin, cos, pi
+from parameters.data import radii, angles
 import copy
 
 # function to initiate a graphene sheet with size in xy-coordinate
-class ArmCNT(object):
+class ArmchairCNT(object):
     """
     Functions for initializing, generating coordinates for, and functionalizing rectangular graphene sheets
 
@@ -114,7 +114,6 @@ class ArmCNT(object):
                 temp = copy.deepcopy(c1)
             else:
                 temp = copy.deepcopy(c2)
-            print(temp)
             for j in range(len(temp)):
                 temp[j].insert(axis_index, axis[i])
             for k in temp:

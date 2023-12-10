@@ -1,1 +1,1 @@
-from rectsheet import RectangularSheet
+from .rectsheet import RectangularSheet
