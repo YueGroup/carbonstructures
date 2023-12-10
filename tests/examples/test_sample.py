@@ -1,6 +1,6 @@
 from src.carbon_manipulation.surfaces import rectsheet
 
-#from carbon-structures.examples.sample import add, divide, make_array
+#from carbonstructures.examples.sample import add, divide, make_array
 
 def test_graphene_gen():
     # test smallest sheet
