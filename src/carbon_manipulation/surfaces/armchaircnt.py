@@ -64,7 +64,7 @@ class ArmchairCNT(object):
                 ind = index
         return ind
     
-    def generate_coords_armchair(self, axis_index = 0, int_ang=0.0):
+    def generate_coords(self, axis_index = 0, int_ang=0.0):
         # take index of closest-fitting radius with radmatch
         index = self.radmatch(self.radius)
         radius = radii[index]

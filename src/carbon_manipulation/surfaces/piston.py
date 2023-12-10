@@ -70,7 +70,7 @@ class Piston(object):
             
         return new_coords
     
-    def generate_coords_piston(self, x=0.0, y=0.0, z=0.0, dist_left=0.0, dist_right=0.0):
+    def generate_coords(self, x=0.0, y=0.0, z=0.0, dist_left=0.0, dist_right=0.0):
         """
         Returns an list of coordinates, in [x,y,z], representing the piston
 

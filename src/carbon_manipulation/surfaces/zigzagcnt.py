@@ -84,7 +84,7 @@ class ZigzagCNT(object):
             angle += angular
         return coords    
 
-    def generate_coords_zigzag(self, x=0.0, y=0.0, z=0.0):
+    def generate_coords(self, x=0.0, y=0.0, z=0.0):
         """
         Returns an list of coordinates, in [x,y,z], representing the zigzag cnt
 
