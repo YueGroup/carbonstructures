@@ -9,15 +9,13 @@ if len(sys.argv[1:]) < 3:
 # Generate graphene sheet object with size x,y in Angstroms
 structure = surfaces.RectangularSheet(float(sys.argv[1]),float(sys.argv[2]),int(sys.argv[3]))
 
-# Number of atoms to create
-natoms = structure.n_Cs
-
 # Size of the system cell in Angstroms
 size1 = structure.len1
 size2 = structure.len2
 
 coordinates = structure.generate_coords()
-	
+natoms = len(coordinates)
+
 # Write LAMMPS data file
 with open('rectsheet_' + str(size1) + "by" + str(size2) + '.data','w') as fdata:
 	# First line is a comment line 
@@ -26,7 +24,7 @@ with open('rectsheet_' + str(size1) + "by" + str(size2) + '.data','w') as fdata:
 	#--- Header ---#
 	# Specify number of atoms and atom types 
 	fdata.write('{} atoms\n'.format(natoms))
-	fdata.write('{} atom types\n'.format(1))
+	fdata.write('{} atom type(s)\n'.format(1))
 	# Specify box dimensions
 	fdata.write('{} {} xlo xhi\n'.format(0.0, size1))
 	fdata.write('{} {} ylo yhi\n'.format(0.0, size2))

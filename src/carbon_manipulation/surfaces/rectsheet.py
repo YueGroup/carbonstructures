@@ -60,9 +60,6 @@ class RectangularSheet(object):
         # length and width of sheet (no partial hexagons)
         self.len1 = self.hex_1 * unit_1 + self.CC_bond * cos(pi / 6.0)
         self.len2 = self.hex_2 * unit_2 + self.CC_bond * sin(pi / 6.0)
-
-        carbons_per_row = 1 + self.hex_1 * 2
-        self.n_Cs = carbons_per_row * (self.hex_2 + 1)
         
     def generate_coords(self, one=0.0, two=0.0, three=0.0):
         """
@@ -103,14 +100,13 @@ class RectangularSheet(object):
                 for ind1 in range(len(coordinates1))
                 if (((ind2 + 1) % 4 == 0 or ind2 % 4 == 0) and ind1 % 2) or 
                    (not ((ind2 + 1) % 4 == 0 or ind2 % 4 == 0) and not ind1 % 2)]
-    
-        # remove excess coordinates
-        #if self.hex_2 % 2: 
-        #    coordinates.remove((coordinates1[-1], 0))
-        #    coordinates.remove((coordinates1[-1], coordinates2[-1]))
-        #else: 
-        #    coordinates.remove((coordinates1[-1], 0))
-        #    coordinates.remove((0, coordinates2[-1]))
+
+        if self.hex_2 % 2: 
+            coordinates.remove([coordinates1[-1], 0])
+            coordinates.remove([coordinates1[-1], coordinates2[-1]])
+        else: 
+            coordinates.remove([coordinates1[-1], 0])
+            coordinates.remove([0, coordinates2[-1]])
 
         for index in range(len(coordinates)):
             coordinates[index].insert(self.plane, three)
