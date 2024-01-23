@@ -1,6 +1,6 @@
 # import numpy as np
 from math import sin, cos, pi
-from parameters.data import radii, angles
+from carbon_manipulation.surfaces import data
 import copy
 
 # function to initiate a graphene sheet with size in xy-coordinate
@@ -51,13 +51,13 @@ class ArmchairCNT(object):
         """
 
         # calculate starting difference between radius and target
-        diff = abs(radii[0] - target)
+        diff = abs(data.radii[0] - target)
         # set index to be returned by this function (matching radius/angle by index)
         ind = 0
         # run through list of radii
-        for index in range(len(radii)):
+        for index in range(len(data.radii)):
             # recalculate difference between list radius and target
-            temp = abs(radii[index] - target)
+            temp = abs(data.radii[index] - target)
             # replace difference and index if difference is smaller than before
             if temp < diff:
                 diff = temp
@@ -67,13 +67,13 @@ class ArmchairCNT(object):
     def generate_coords(self, axis_index = 0, int_ang=0.0):
         # take index of closest-fitting radius with radmatch
         index = self.radmatch(self.radius)
-        radius = radii[index]
+        radius = data.radii[index]
         # calculate useful values: tube length, half of tube length, number of edges, 
         # separation angle, angular shift
         tube_length = (2 * self.hex_length + 1) * self.CC_bond * cos(pi / 6.0)
         half = (tube_length / 2)
         edges = index + 3
-        angle = angles[index]
+        angle = data.angles[index]
         shift = ((2 * pi) / edges) - angle
         
         # generate first circle of coordinates
