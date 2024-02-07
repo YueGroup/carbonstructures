@@ -30,7 +30,7 @@ class RectangularSheet(object):
             generated sheet has dimensional lengths LESS THAN OR EQUAL TO len1 and len2
 
         Preconditions: 
-            len1, len2 are floats
+            one, two are floats
             plane is 0, 1, or 2
                 0: x = a, y = len1, z = len2
                 1: x = len1, y = a, z = len2
@@ -113,4 +113,3 @@ class RectangularSheet(object):
             coordinates[index] = tuple(coordinates[index])
         
         return coordinates
-        
