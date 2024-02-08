@@ -46,7 +46,7 @@ if sys.argv[4] == "lammps":
 			
 		# If you have bonds and angles, further sections below
 
-if sys.argv[4] == "xyz":
+elif sys.argv[4] == "xyz":
     # Write XYZ data file
     with open('sandwich_' + str(xsize) + "by" + str(ysize) + "gapsize" + str(zsize) + '.xyz','w') as fdata:
         # Specify number of atoms

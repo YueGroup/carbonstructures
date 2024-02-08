@@ -41,7 +41,7 @@ if sys.argv[3] == "lammps":
 			
 		# If you have bonds and angles, further sections below
 
-if sys.argv[3] == "xyz":
+elif sys.argv[3] == "xyz":
     # Write XYZ data file
     with open('rectsheet_' + str(xsize) + "by" + str(ysize) + '.xyz','w') as fdata:
         # Specify number of atoms
