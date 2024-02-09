@@ -12,10 +12,7 @@
 # steps
 # generate cnt
 from math import sin,cos,pi,sqrt
-import armchaircnt
-import zigzagcnt
-import rectsheet
-
+from carbon_manipulation.surfaces import armchaircnt,zigzagcnt,rectsheet
 
 class Piston(object):
     """
@@ -43,9 +40,9 @@ class Piston(object):
             raise Exception("There is no such form of CNT")
         self.form = form
         if form == "zigzag":
-            self.cnt = zigzagcnt.ZigCNT(cntlenght,diameter)
+            self.cnt = zigzagcnt.ZigzagCNT(cntlenght,diameter)
         elif form == "armchair":
-            self.cnt = armchaircnt.ArmCNT(cntlenght,diameter)
+            self.cnt = armchaircnt.ArmchairCNT(cntlenght,diameter)
         elif form == "chiral":
             self.cnt = "unfinished"
         self.sheetL = rectsheet.RectangularSheet(xlen,ylen)
@@ -61,6 +58,8 @@ class Piston(object):
         
         new_coords = []
         for coordinate in coordinates:
+            print(coordinate)
+            print(type(coordinate[0]))
             if sqrt(coordinate[0] ** 2 + coordinate[1] ** 2) > self.radius:
                 new_coords.append(coordinate)
         
@@ -81,9 +80,9 @@ class Piston(object):
         """
         # generate CNT coordinates
         if self.form == "zigzag":
-            coord_cnt = self.cnt.generate_coords_zigzag(x,y,z-self.cnt.length*0.5)
+            coord_cnt = self.cnt.generate_coords(x,y,z-self.cnt.length*0.5)
         elif self == "armchair":
-             coord_cnt = self.cnt.generate_coords_armchair()
+             coord_cnt = self.cnt.generate_coords()   #what is (axis_index = 0, int_ang=0.0) in armchair cnt generate_coords?
 
         # z-coords for left and right graphene sheet
         zL = (z-self.cnt.length*0.5) - dist_left
@@ -98,8 +97,8 @@ class Piston(object):
         coord_sheetR1 = self.sheetR.generate_coords(x_bot,y_bot,zR)
 
         # coordinate for the poked graphene sheets adjacent to ends of cnt
-        coord_sheetL2 = self.poke(self.sheetL.generate_coords(x_bot,y_bot,z-self.cnt.length*0.5))
-        coord_sheetR2 = self.poke(self.sheetL.generate_coords(x_bot,y_bot,z+self.cnt.length*0.5))
+        coord_sheetL2 = self.poke(self.sheetL.generate_coords(x=x_bot,y=y_bot,z=z-self.cnt.length*0.5))
+        coord_sheetR2 = self.poke(self.sheetL.generate_coords(x=x_bot,y=y_bot,z=z+self.cnt.length*0.5))
 
-        coords = coord_sheetL1 + coord_sheetL2 + coord_cnt + coord_sheetR1 + coord_sheetR2
+        coords = coord_sheetL1 + coord_sheetL2 + coord_cnt + coord_sheetR2 + coord_sheetR1
         return coords
