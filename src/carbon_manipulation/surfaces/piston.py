@@ -82,8 +82,8 @@ class Piston(object):
         # generate CNT coordinates
         if self.form == "zigzag":
             coord_cnt = self.cnt.generate_coords_zigzag(x,y,z-self.cnt.length*0.5)
-        # elif self == "chiral":
-        #     coord_cnt = self.cnt.generate_coords_armchair()
+        elif self == "armchair":
+             coord_cnt = self.cnt.generate_coords_armchair()
 
         # z-coords for left and right graphene sheet
         zL = (z-self.cnt.length*0.5) - dist_left
@@ -94,8 +94,12 @@ class Piston(object):
         y_bot = y-self.sheetL.ylen
 
         # generate left and right graphene sheet coordinate
-        coord_sheetL = self.sheetL.generate_coords(x_bot,y_bot,zL)
-        coord_sheetR = self.sheetR.generate_coords(x_bot,y_bot,zR)
+        coord_sheetL1 = self.sheetL.generate_coords(x_bot,y_bot,zL)
+        coord_sheetR1 = self.sheetR.generate_coords(x_bot,y_bot,zR)
 
-        coords = coord_sheetL + coord_cnt + coord_sheetR
+        # coordinate for the poked graphene sheets adjacent to ends of cnt
+        coord_sheetL2 = self.poke(self.sheetL.generate_coords(x_bot,y_bot,z-self.cnt.length*0.5))
+        coord_sheetR2 = self.poke(self.sheetL.generate_coords(x_bot,y_bot,z+self.cnt.length*0.5))
+
+        coords = coord_sheetL1 + coord_sheetL2 + coord_cnt + coord_sheetR1 + coord_sheetR2
         return coords
