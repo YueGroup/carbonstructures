@@ -64,7 +64,7 @@ class ArmchairCNT(object):
                 ind = index
         return ind
     
-    def generate_coords(self, axis_index = 0, int_ang=0.0):
+    def generate_coords(self):
         # take index of closest-fitting radius with radmatch
         index = self.radmatch(self.radius)
         radius = data.radii[index]
@@ -77,34 +77,34 @@ class ArmchairCNT(object):
         shift = ((2 * pi) / edges) - angle
         
         # generate first circle of coordinates
-        c1ang = int_ang
-        c1 = [[radius * cos(c1ang),radius * sin(c1ang)]]
+        c1ang = 0
+        c1 = [["{:.6f}".format(radius * cos(c1ang)),"{:.6f}".format(radius * sin(c1ang))]]
         c1ind = 1
         while c1ind < 2 * edges:
             if c1ind % 2:
                 c1ang += shift
             else:
                 c1ang += angle
-            c1.append([radius * cos(c1ang),radius * sin(c1ang)])
+            c1.append(["{:.6f}".format(radius * cos(c1ang)),"{:.6f}".format(radius * sin(c1ang))])
             c1ind += 1
         
         # generate second circle of coordinates
-        c2ang = int_ang + pi / edges
-        c2 = [[radius * cos(c2ang),radius * sin(c2ang)]]
+        c2ang = pi / edges
+        c2 = [["{:.6f}".format(radius * cos(c2ang)),"{:.6f}".format(radius * sin(c2ang))]]
         c2ind = 1
         while c2ind < 2 * edges:
             if c2ind % 2:
                 c2ang += shift
             else:
                 c2ang += angle
-            c2.append([radius * cos(c2ang),radius * sin(c2ang)])
+            c2.append(["{:.6f}".format(radius * cos(c2ang)),"{:.6f}".format(radius * sin(c2ang))])
             c2ind += 1
         
         # generate axis coordinates
         axis = []
         axis_coord = -half
         while axis_coord <= half + 1:
-            axis.append(axis_coord)
+            axis.append("{:.6f}".format(axis_coord))
             axis_coord += self.CC_bond * cos(pi / 6.0)
         
         # attach coordinates
@@ -115,7 +115,7 @@ class ArmchairCNT(object):
             else:
                 temp = copy.deepcopy(c2)
             for j in range(len(temp)):
-                temp[j].insert(axis_index, axis[i])
+                temp[j].append(axis[i])
             for k in temp:
                 coordinates.append(tuple(k))
              
