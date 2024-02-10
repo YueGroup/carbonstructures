@@ -51,7 +51,8 @@ class RectangularSheet(object):
         self.xlen = self.xhex * xunit + self.CC * cos(pi / 6.0)
         self.ylen = self.yhex * yunit + self.CC * sin(pi / 6.0)
         
-    def generate_coords(self, z=0.0):
+    def generate_coords(self, x=0.0, y=0.0, z=0.0):
+    # def generate_coords(self,z=0.0):
         """
         Returns an list of coordinates, in tuples (x,y), representing the rectangular graphene sheet
 
@@ -60,6 +61,10 @@ class RectangularSheet(object):
             y: bottom left corner y-coordinate (default 0.00)
             z: z-coordinate of sheet (default 0.00)
         """
+        #need to have the option to specify x and y (at bottom left corner) for sheets in piston code
+        # is the starting x, y here from bottom left
+
+
         # columns: number of unique x-coordinates
         columns = 2 * self.xhex + 2
         # rows: number of unique y-coordinates
@@ -67,19 +72,23 @@ class RectangularSheet(object):
 
         # generate list of x-coordinates
         xcoordlist = []
+        # xcoord = -(self.CC * cos(pi / 6.0)) + x
         xcoord = -(self.CC * cos(pi / 6.0))
         xcount = 0
         while xcount < columns:
-            xcoordlist.append("{:.6f}".format(xcoord))
+            xcoordlist.append(float("{:.6f}".format(xcoord)))
+            # xcoordlist.append("{:.6f}".format(xcoord))
             xcoord += self.CC * cos(pi / 6.0)
             xcount += 1
 
         # generate list of y-coordinates
         ycoordlist = []
+        # ycoord = y
         ycoord = 0
         ycount = 0
         while ycount < rows:
-            ycoordlist.append("{:.6f}".format(ycoord))
+            ycoordlist.append(float("{:.6f}".format(ycoord))) 
+            # ycoordlist.append("{:.6f}".format(ycoord))    
             if ycount % 2: 
                 ycoord += self.CC
             else:
@@ -101,7 +110,9 @@ class RectangularSheet(object):
 #            coordinates.remove([0, ycoordlist[-1]])
 
         for index in range(len(coordinates)):
-            coordinates[index].append("{:.6f}".format(z))
+            coordinates[index].append(float("{:.6f}".format(z)))
+            # coordinates[index].append("{:.6f}".format(z))
             coordinates[index] = tuple(coordinates[index])
         
         return coordinates
+
