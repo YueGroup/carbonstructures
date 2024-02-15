@@ -9,7 +9,7 @@ class RectangularSheet(object):
     Defaults:
         x-axis: zigzag side
         y-axis: armchair side
-        z-axis: plane
+        z-axis: plane (z=0)
     
     Instance attributes: 
         len1 [float]: total specified length in x-direction
@@ -23,7 +23,7 @@ class RectangularSheet(object):
         provide the closest estimate that is smaller than the specified parameters
     """
 
-    def __init__(self, x, y):
+    def __init__(self, x, y, CC=1.418):
         """
         Creates a RectangularSheet instance:
             generated sheet is a VALID structure (no partial hexagons)
@@ -33,7 +33,7 @@ class RectangularSheet(object):
             xlen, ylen are floats
         """
         # set CC bond length
-        self.CC = 1.418
+        self.CC = CC
 
         # hexagon unit lengths
         xunit = 2.0 * self.CC * cos(pi / 6.0)
@@ -48,7 +48,7 @@ class RectangularSheet(object):
             raise Exception("Sheet dimensions too small!")
         
         # length and width of sheet (no partial hexagons)
-        self.xlen = self.xhex * xunit + self.CC * cos(pi / 6.0)
+        self.xlen = self.xhex * xunit
         self.ylen = self.yhex * yunit + self.CC * sin(pi / 6.0)
         
     def generate_coords(self, x=0.0, y=0.0, z=0.0):
@@ -76,8 +76,8 @@ class RectangularSheet(object):
         xcoord = -(self.CC * cos(pi / 6.0))
         xcount = 0
         while xcount < columns:
-            xcoordlist.append(float("{:.6f}".format(xcoord)))
-            # xcoordlist.append("{:.6f}".format(xcoord))
+            # xcoordlist.append(float("{:.6f}".format(xcoord)))
+            xcoordlist.append("{:.6f}".format(xcoord))
             xcoord += self.CC * cos(pi / 6.0)
             xcount += 1
 
@@ -87,8 +87,8 @@ class RectangularSheet(object):
         ycoord = 0
         ycount = 0
         while ycount < rows:
-            ycoordlist.append(float("{:.6f}".format(ycoord))) 
-            # ycoordlist.append("{:.6f}".format(ycoord))    
+            # ycoordlist.append(float("{:.6f}".format(ycoord))) 
+            ycoordlist.append("{:.6f}".format(ycoord))    
             if ycount % 2: 
                 ycoord += self.CC
             else:

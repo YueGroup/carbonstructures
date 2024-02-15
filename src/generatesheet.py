@@ -1,22 +1,51 @@
 import carbon_manipulation.surfaces as surfaces
 import sys, getopt
+from math import cos, pi
 
-# opts, args = getopt.getopt(sys.argv[1:],"o:t:p:xyz",["length1=","length2=","plane=","coord1","coord2","coord3"])
+# Gather user input
 
-if len(sys.argv[1:]) < 3:
-    raise Exception("Not enough parameters specified!")
+opts, args = getopt.getopt(sys.argv[1:],"hx:y:c:f:",["length1=","length2=","plane=","coord1","coord2","coord3"])
 
-# Generate graphene sheet object with size x,y in Angstroms
-structure = surfaces.RectangularSheet(float(sys.argv[1]),float(sys.argv[2]))
+x = ''
+y = ''
+c = 1.418
+f = ''
 
-# Size of the system cell in Angstroms
+for opt, arg in opts:
+    if opt == '-h':
+        print('python generatesheet.py -x <x-length> -y <y-length (-c <cc bond length>) -f <file type>')
+        sys.exit()
+    elif opt == '-x':
+        x = arg
+    elif opt == '-y':
+        y = arg
+    elif opt == '-c':
+        cc = arg
+    elif opt == '-f':
+        f = arg
+
+# Exception for missing required inputs
+
+if x == '' or y == '' or f == '':
+    raise Exception("Missing required parameters!")
+
+# Generate graphene sheet object with size x, y and bond length c
+structure = surfaces.RectangularSheet(float(x),float(y),float(c))
+
+# Define box sizes
 xsize = "{:.6f}".format(structure.xlen)
 ysize = "{:.6f}".format(structure.ylen)
+xlo = "{:.6f}".format(-float(c) * cos(pi / 6.0))
+xhi = "{:.6f}".format(float(xsize) - float(xlo))
+ylo = "0.000000"
+yhi = "{:.6f}".format(float(ysize) + float(c))
+zlo = "0.000000"
+zhi = "0.000000"
 
 coordinates = structure.generate_coords()
 natoms = len(coordinates)
 
-if sys.argv[3] == "lammps":
+if f == "lammps":
 	# Write LAMMPS data file
 	with open('rectsheet_' + str(xsize) + "by" + str(ysize) + '.data','w') as fdata:
 		# First line is a comment line 
@@ -27,9 +56,9 @@ if sys.argv[3] == "lammps":
 		fdata.write('{} atoms\n'.format(natoms))
 		fdata.write('{} atom type(s)\n'.format(1))
 		# Specify box dimensions
-		fdata.write('{} {} xlo xhi\n'.format(0.000000, xsize))
-		fdata.write('{} {} ylo yhi\n'.format(0.000000, ysize))
-		fdata.write('{} {} zlo zhi\n'.format(0.000000, 0.000000))
+		fdata.write('{} {} xlo xhi\n'.format(xlo, xhi))
+		fdata.write('{} {} ylo yhi\n'.format(ylo, yhi))
+		fdata.write('{} {} zlo zhi\n'.format(zlo, zhi))
 		fdata.write('\n')
 
 		# Atoms section
@@ -41,7 +70,7 @@ if sys.argv[3] == "lammps":
 			
 		# If you have bonds and angles, further sections below
 
-elif sys.argv[3] == "xyz":
+elif f == "xyz":
     # Write XYZ data file
     with open('rectsheet_' + str(xsize) + "by" + str(ysize) + '.xyz','w') as fdata:
         # Specify number of atoms
