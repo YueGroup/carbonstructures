@@ -45,21 +45,22 @@ if x == '' or y == '' or l == '' or d == '' or g == '' or f == '':
 structure = surfaces.Piston(float(x),float(y),float(l),float(d),m,float(c))
 
 # Define box sizes
-xsize = "hi"
-ysize = "hi"
-xlo = "0.000000"
-xhi = "0.000000"
+xsize = "{:.6f}".format(structure.sheet.xlen)
+ysize = "{:.6f}".format(structure.sheet.ylen)
+zsize = "{:.6f}".format(structure.cnt.length)
+xlo = "{:.6f}".format(-float(c) * cos(pi / 6.0))
+xhi = "{:.6f}".format(float(xsize) - float(xlo))
 ylo = "0.000000"
-yhi = "0.000000"
-zlo = "0.000000"
-zhi = "0.000000"
+yhi = "{:.6f}".format(float(ysize) + float(c))
+zlo = "{:.6f}".format(-structure.cnt.length / 2 - float(g))
+zhi = "{:.6f}".format(structure.cnt.length / 2 + float(g))
 
 coordinates = structure.generate_coords(float(g))
 natoms = len(coordinates)
 
 if f == "lammps":
 	# Write LAMMPS data file
-	with open('rectsheet_' + str(xsize) + "by" + str(ysize) + '.data','w') as fdata:
+	with open('piston_' + str(xsize) + 'by' + str(ysize) + 'by' + str(zsize) + 'type' + m + 'rad' + str(structure.cnt.radius) + '.data','w') as fdata:
 		# First line is a comment line 
 		fdata.write('Atoms for Graphene Sheet in LAMMPS\n\n')
 
@@ -84,7 +85,7 @@ if f == "lammps":
 
 elif f == "xyz":
     # Write XYZ data file
-    with open('rectsheet_' + str(xsize) + "by" + str(ysize) + '.xyz','w') as fdata:
+    with open('piston_' + str(xsize) + 'by' + str(ysize) + 'by' + str(zsize) + 'type' + m + 'rad' + str(structure.cnt.radius) + '.xyz','w') as fdata:
         # Specify number of atoms
         fdata.write('{}\n\n'.format(natoms))
         for pos in coordinates:
