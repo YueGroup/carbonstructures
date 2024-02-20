@@ -59,7 +59,19 @@ class Piston(object):
         return new_coords
     
     def xyshift(self, coordinates, x, y):
+        coords = coordinates[0]
+
+        for index in range(len(coords)):
+            # convert from tuple to list
+            coords[index] = list(coords[index])
         
+        for coord in coords:
+            coord[0] = "{:.6f}".format(float(coord[0]) + x)
+            coord[1] = "{:.6f}".format(float(coord[1]) + y)
+
+        coordinates[0] = coords
+
+        return coordinates
     
     def generate_coords(self, gap):
         """
@@ -75,10 +87,8 @@ class Piston(object):
             # coord_cnt = self.cnt.generate_coords(x,y,z-self.cnt.length*0.5)
             pass
         elif self.form == "arm":
-            cnt = self.cnt.generate_coords()
+            cnt = self.xyshift(self.cnt.generate_coords(),(float(self.sheet.generate_coords()[1]) + float(self.sheet.generate_coords()[2])) / 2,(float(self.sheet.generate_coords()[3]) + float(self.sheet.generate_coords()[4])) / 2)
 
-        
-        
         sheet1 = self.sheet.generate_coords(-cnt[1] - gap)
         sheet2 = self.sheet.generate_coords(-cnt[1])
         sheet3 = self.sheet.generate_coords(cnt[1])

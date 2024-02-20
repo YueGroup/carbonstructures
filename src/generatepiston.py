@@ -17,7 +17,7 @@ f = ''
 
 for opt, arg in opts:
     if opt == '-h':
-        print('python generatesheet.py -x <sheet x-length> -y <sheet y-length> -l <cnt length> -d <cnt diameter> (-m <cnt form>) -g <sheet gap size> (-c <cc bond length>) -f <file type>')
+        print('python generatepiston.py -x <sheet x-length> -y <sheet y-length> -l <cnt length> -d <cnt diameter> (-m <cnt form>) -g <sheet gap size> (-c <cc bond length>) -f <file type>')
         sys.exit()
     elif opt == '-x':
         x = arg
