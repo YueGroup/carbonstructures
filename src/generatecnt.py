@@ -10,18 +10,18 @@ if len(sys.argv[1:]) < 3:
 if sys.argv[1] == "arm":
     structure = surfaces.ArmchairCNT(float(sys.argv[2]),float(sys.argv[3]))
 elif sys.argv[1] == "zig":
-    pass
+    structure = surfaces.ZigzagCNT(float(sys.argv[2]),float(sys.argv[3]))
 else:
     pass
 
 # Size of the system cell in Angstroms
 
-coordinates = structure.generate_coords()
+coordinates = structure.generate_coords()[0]
 natoms = len(coordinates)
 
 if sys.argv[4] == "lammps":
 	# Write LAMMPS data file
-	with open('cnt_diameter' + sys.argv[3] + "length" + sys.argv[2] + '.data','w') as fdata:
+	with open(sys.argv[1] + 'cnt_diameter' + sys.argv[3] + "length" + sys.argv[2] + '.data','w') as fdata:
 		# First line is a comment line 
 		fdata.write('Atoms for Graphene Sheet in LAMMPS\n\n')
 
@@ -46,7 +46,7 @@ if sys.argv[4] == "lammps":
 
 elif sys.argv[4] == "xyz":
     # Write XYZ data file
-    with open('cnt_diameter' + sys.argv[3] + "length" + sys.argv[2] + '.xyz','w') as fdata:
+    with open(sys.argv[1] + 'cnt_diameter' + sys.argv[3] + "length" + sys.argv[2] + '.xyz','w') as fdata:
         # Specify number of atoms
         fdata.write('{}\n\n'.format(natoms))
         for pos in coordinates:

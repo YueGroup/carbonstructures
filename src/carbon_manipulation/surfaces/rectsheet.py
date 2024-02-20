@@ -51,14 +51,12 @@ class RectangularSheet(object):
         self.xlen = self.xhex * xunit
         self.ylen = self.yhex * yunit + self.CC * sin(pi / 6.0)
         
-    def generate_coords(self, x=0.0, y=0.0, z=0.0):
+    def generate_coords(self, z=0.0):
     # def generate_coords(self,z=0.0):
         """
         Returns an list of coordinates, in tuples (x,y), representing the rectangular graphene sheet
 
         Parameters: 
-            x: bottom left corner x-coordinate (default 0.00)
-            y: bottom left corner y-coordinate (default 0.00)
             z: z-coordinate of sheet (default 0.00)
         """
         #need to have the option to specify x and y (at bottom left corner) for sheets in piston code
@@ -110,9 +108,9 @@ class RectangularSheet(object):
 #            coordinates.remove([0, ycoordlist[-1]])
 
         for index in range(len(coordinates)):
-            coordinates[index].append(float("{:.6f}".format(z)))
+            coordinates[index].append("{:.6f}".format(z))
             # coordinates[index].append("{:.6f}".format(z))
             coordinates[index] = tuple(coordinates[index])
         
-        return coordinates
+        return [coordinates, xcoordlist[0], xcoordlist[-1], ycoordlist[0], ycoordlist[-1]]
 

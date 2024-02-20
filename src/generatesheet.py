@@ -4,7 +4,7 @@ from math import cos, pi
 
 # Gather user input
 
-opts, args = getopt.getopt(sys.argv[1:],"hx:y:c:f:",["length1=","length2=","plane=","coord1","coord2","coord3"])
+opts, args = getopt.getopt(sys.argv[1:],"hx:y:c:f:")
 
 x = ''
 y = ''
@@ -13,7 +13,7 @@ f = ''
 
 for opt, arg in opts:
     if opt == '-h':
-        print('python generatesheet.py -x <x-length> -y <y-length (-c <cc bond length>) -f <file type>')
+        print('python generatesheet.py -x <x-length> -y <y-length> (-c <cc bond length>) -f <file type>')
         sys.exit()
     elif opt == '-x':
         x = arg
@@ -42,7 +42,7 @@ yhi = "{:.6f}".format(float(ysize) + float(c))
 zlo = "0.000000"
 zhi = "0.000000"
 
-coordinates = structure.generate_coords()
+coordinates = structure.generate_coords()[0]
 natoms = len(coordinates)
 
 if f == "lammps":

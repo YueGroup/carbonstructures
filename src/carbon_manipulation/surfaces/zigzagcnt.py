@@ -1,3 +1,5 @@
+# WORK IN PROGRESS
+
 # import numpy as np
 from math import sin, cos, pi, asin, floor
 
@@ -46,15 +48,6 @@ class ZigzagCNT(object):
 
         # length of zigzag CNT (no partial hexagon)
         self.length = self.hex_length*2*self.CC_bond - (self.hex_length-1)*0.5*self.CC_bond
-
-        #if form == "zigzag":
-        # self.hex_length = (length - self.CC_bond * sin(pi / 6.0)) // ((1.0 + sin(pi / 6.0)) * self.CC_bond)
-        # elif form == "armchair":
-        #     return "unfinished"
-        # elif form == "chiral":
-        #     return "unfinished"
-        # else: 
-        #     raise Exception("Invalid form")
         
     def axial_circle(self, z=0.0, axis="aligned"):
         """
@@ -105,48 +98,4 @@ class ZigzagCNT(object):
             coords += top+side1+side2+bot
             z1 += 3*self.CC_bond
         return coords
-
-
-
-        # # define atom_length to be the number of atoms in the positive x direction
-        # atom_length = 2 * self.hex_length + 2
-
-        # # define angular to be the angle between two atoms of equal radius
-        # angular = (2 * pi) / self.ring_atoms
-
-        # define points on a circle for the non-axial atom coordinates
-
-
-        
-        # # define points on a circle for the non-axial atom coordinates
-        # circ1anglesum = 0
-        # circ1angles = [circ1anglesum]
-        # while circ1anglesum < 2 * pi:
-        #     circ1anglesum += angular
-        #     circ1angles.append(circ1anglesum)
-
-        # circ2anglesum = angular / 2
-        # circ2angles = [circ2anglesum]
-        # while circ2anglesum < 2 * pi + angular / 2:
-        #     circ2anglesum += angular
-        #     circ2angles.append(circ2anglesum)
-        
-        # x_coordinates = [x]
-        # x_counter = 1
-        # while x_counter < atom_length:
-        #     x += self.CC_bond * cos(pi / 6.0)
-        #     x_coordinates.append(x)
-        #     x_counter += 1
-
-
-        
-        # coordinates = []
-        
-        
-        
-        
-         
-        
-        
-        # make list of columns/rows, form relevant tuples into a masterlist
         
