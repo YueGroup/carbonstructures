@@ -3,7 +3,7 @@
 # import numpy as np
 from math import sin, cos, pi, asin, floor
 
-# function to initiate a CNT with size in xyz-coordinate
+# function to initiate a zigzag CNT with size in xyz-coordinate
 class ZigzagCNT(object):
     """
     Functions for initializing, generating coordinates for, and functionalizing zigzag CNTs
@@ -82,7 +82,8 @@ class ZigzagCNT(object):
         Returns an list of coordinates, in [x,y,z], representing the zigzag cnt
 
         Parameters: 
-            x, y, z [float]: axial center of CNT, grows out in symmetrical left and right z direction
+            x, y [float]:  at axial center of CNT
+            z [float]: at center of CNT's left-most end 
         """
 
         # generate coords for CNT with one unit hexagon in length at a time

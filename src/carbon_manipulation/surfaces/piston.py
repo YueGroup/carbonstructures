@@ -36,6 +36,15 @@ class Piston(object):
         self.sheet = rectsheet.RectangularSheet(xlen,ylen)
     
     def poke(self, coordinates):
+        """
+        Helper function to remove center atoms on graphene sheets that lay beyond the radius of cnt
+
+        Parameters:
+            coordinates [list]: list of tuples that contains xyz corrdinates of graphene sheet
+
+        Return:
+            list of tuples containing corrdinates of poke graphene sheet
+        """
         # coordinates is a list of atom coordinates in the graphene sheet. 
         
         # identify center of sheet
@@ -59,6 +68,14 @@ class Piston(object):
         return new_coords
     
     def xyshift(self, coordinates, x, y):
+        """
+        Helper function to shift coordinates by x in x-direction and by y in y-direction
+
+        Parameters:
+            coordinates [list]: list of tuples that contains xyz coordinates 
+            x[float]: shift distance in x direction
+            y[float]: shift distance in y direction
+        """
         coords = coordinates[0]
 
         for index in range(len(coords)):
@@ -84,7 +101,7 @@ class Piston(object):
         """
         # generate CNT coordinates
         if self.form == "zig":
-            # coord_cnt = self.cnt.generate_coords(x,y,z-self.cnt.length*0.5)
+            cnt = self.cnt.generate_coords(z=-self.cnt.length*0.5)
             pass
         elif self.form == "arm":
             cnt = self.xyshift(self.cnt.generate_coords(),(float(self.sheet.generate_coords()[1]) + float(self.sheet.generate_coords()[2])) / 2,(float(self.sheet.generate_coords()[3]) + float(self.sheet.generate_coords()[4])) / 2)
