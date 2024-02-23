@@ -3,7 +3,7 @@ from math import sin, cos, pi
 from carbon_manipulation.surfaces import data
 import copy
 
-# function to initiate a graphene sheet with size in xy-coordinate
+# function to initiate an airchair CNT with size in xyz-coordinate
 class ArmchairCNT(object):
     """
     Functions for initializing, generating coordinates for, and functionalizing rectangular graphene sheets
