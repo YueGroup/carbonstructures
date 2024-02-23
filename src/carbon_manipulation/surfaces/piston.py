@@ -90,26 +90,25 @@ class Piston(object):
 
         return coordinates
     
-    def generate_coords(self, gap):
+    def generate_coords(self, gap, move=0.0):     # I think for the pistion, there should be an option to change the gap between CNT and an outer sheet
+                                            # while keeping the other one constant (that's why it's a piston?) so i added a parameter (move)
+                                        # tell me if it messes with your vmd tho!
         """
         Returns an list of coordinates, in [x,y,z], representing the piston
 
         Parameters: 
-            x, y, z [float]: axial center of CNT
-            dist_left [float]: distance of left graphene sheet from the end of CNT
-            dist_right [float]: distance of right graphene sheet from the end of CNT
+            gap [float]: distance between 2 outer sheets to each end of CNT
         """
         # generate CNT coordinates
         if self.form == "zig":
             cnt = self.cnt.generate_coords(z=-self.cnt.length*0.5)
-            pass
         elif self.form == "arm":
             cnt = self.xyshift(self.cnt.generate_coords(),(float(self.sheet.generate_coords()[1]) + float(self.sheet.generate_coords()[2])) / 2,(float(self.sheet.generate_coords()[3]) + float(self.sheet.generate_coords()[4])) / 2)
 
         sheet1 = self.sheet.generate_coords(-cnt[1] - gap)
         sheet2 = self.sheet.generate_coords(-cnt[1])
         sheet3 = self.sheet.generate_coords(cnt[1])
-        sheet4 = self.sheet.generate_coords(cnt[1] + gap)
+        sheet4 = self.sheet.generate_coords(cnt[1] + gap + move)
         
         coordinates = sheet1[0] + self.poke(sheet2) + cnt[0] + self.poke(sheet3) + sheet4[0]
         
