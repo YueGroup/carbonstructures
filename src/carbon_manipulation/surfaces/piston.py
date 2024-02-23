@@ -35,13 +35,13 @@ class Piston(object):
             # self.cnt = "unfinished"
         self.sheet = rectsheet.RectangularSheet(xlen,ylen)
     
-    def poke(self, coordinates):
+    def poke(self, coordinates, delta=0.0):
         """
         Helper function to remove center atoms on graphene sheets that lay beyond the radius of cnt
 
         Parameters:
             coordinates [list]: list of tuples that contains xyz corrdinates of graphene sheet
-
+            delta [float]: wiggle room to cut out atoms less than or equal to delta-Angstrom close to CNT
         Return:
             list of tuples containing corrdinates of poke graphene sheet
         """
@@ -58,7 +58,7 @@ class Piston(object):
         
         new_coords = []
         for coord in coords:
-            if sqrt((float(coord[0]) - centerx) ** 2 + (float(coord[1]) - centery) ** 2) > (self.cnt.radius + 2):
+            if sqrt((float(coord[0]) - centerx) ** 2 + (float(coord[1]) - centery) ** 2) > (self.cnt.radius + 2 + delta):
                 new_coords.append(coord)
         
         for index2 in range(len(new_coords)):
