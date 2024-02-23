@@ -35,7 +35,7 @@ class Piston(object):
             # self.cnt = "unfinished"
         self.sheet = rectsheet.RectangularSheet(xlen,ylen)
     
-    def poke(self, coordinates, delta=0.0):
+    def poke(self, coordinates, delta=2.0):
         """
         Helper function to remove center atoms on graphene sheets that lay beyond the radius of cnt
 
@@ -58,7 +58,7 @@ class Piston(object):
         
         new_coords = []
         for coord in coords:
-            if sqrt((float(coord[0]) - centerx) ** 2 + (float(coord[1]) - centery) ** 2) > (self.cnt.radius + 2 + delta):
+            if sqrt((float(coord[0]) - centerx) ** 2 + (float(coord[1]) - centery) ** 2) > (self.cnt.radius + delta):
                 new_coords.append(coord)
         
         for index2 in range(len(new_coords)):
