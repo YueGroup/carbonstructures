@@ -79,7 +79,7 @@ if f == "lammps":
 
 		# Write each position 
 		for i,pos in enumerate(coordinates):
-			fdata.write('{} 1 {} {} {}\n'.format(i+1,*pos))
+			fdata.write('{} 3 {} {} {}\n'.format(i+1,*pos))
 			
 		# If you have bonds and angles, further sections below
 
