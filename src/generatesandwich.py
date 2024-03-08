@@ -84,7 +84,7 @@ if f == "lammps":
 
 elif f == "xyz":
     # Write XYZ data file
-    with open('sandwich_' + str(xsize) + "by" + str(ysize) + "gapsize" + str(zsize) + '.xyz','w') as fdata:
+    with open('sandwich_' + str(xsize) + "by" + str(ysize) + "gapsize" + g + '.xyz','w') as fdata:
         # Specify number of atoms
         fdata.write('{}\n\n'.format(natoms))
         for pos in coordinates:
