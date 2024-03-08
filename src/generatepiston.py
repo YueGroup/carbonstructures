@@ -54,11 +54,12 @@ ylo = "0.000000"
 yhi = "{:.6f}".format(float(ysize) + float(c))
 zlo = "{:.6f}".format(-structure.cnt.length / 2 - float(g))
 zhi = "{:.6f}".format(structure.cnt.length / 2 + float(g))
+cnthalf = "{:.6f}".format(structure.cnt.length / 2)
 
 coordinates = structure.generate_coords(float(g))
 natoms = len(coordinates)
 
-if f == "lammps":
+if f == "data":
 	# Write LAMMPS data file
 	with open('piston_' + str(xsize) + 'by' + str(ysize) + 'by' + str(zsize) + 'type' + m + 'rad' + str(structure.cnt.radius) + '.data','w') as fdata:
 		# First line is a comment line 
@@ -93,3 +94,7 @@ elif f == "xyz":
 
 else:
     raise Exception("File format not recognized!")
+
+print("CNT radius: " + str(structure.cnt.radius))
+print("Sandwich 1 dimensions:\nx: " + xlo + " " + xhi + "\ny: " + ylo + " " + yhi + "\nz: " + zlo + " -" + cnthalf)
+print("Sandwich 1 dimensions:\nx: " + xlo + " " + xhi + "\ny: " + ylo + " " + yhi + "\nz: " + cnthalf + " " + zhi)

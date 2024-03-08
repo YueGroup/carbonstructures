@@ -45,7 +45,7 @@ zhi = "0.000000"
 coordinates = structure.generate_coords()[0]
 natoms = len(coordinates)
 
-if f == "lammps":
+if f == "data":
 	# Write LAMMPS data file
 	with open('rectsheet_' + str(xsize) + "by" + str(ysize) + '.data','w') as fdata:
 		# First line is a comment line 

@@ -54,7 +54,7 @@ coordinates = structure.generate_coords()[0]
 coordinates2 = structure.generate_coords(float(g))[0]
 natoms = len(coordinates) + len(coordinates2)
 
-if f == "lammps":
+if f == "data":
 	# Write LAMMPS data file
 	with open('sandwich_' + str(xsize) + "by" + str(ysize) + "gapsize" + g + '.data','w') as fdata:
 		# First line is a comment line 

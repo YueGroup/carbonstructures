@@ -19,7 +19,7 @@ else:
 coordinates = structure.generate_coords()[0]
 natoms = len(coordinates)
 
-if sys.argv[4] == "lammps":
+if sys.argv[4] == "data":
 	# Write LAMMPS data file
 	with open(sys.argv[1] + 'cnt_diameter' + sys.argv[3] + "length" + sys.argv[2] + '.data','w') as fdata:
 		# First line is a comment line 
