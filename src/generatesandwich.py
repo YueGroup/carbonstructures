@@ -63,7 +63,7 @@ if f == "data":
 		#--- Header ---#
 		# Specify number of atoms and atom types 
 		fdata.write('{} atoms\n'.format(natoms))
-		fdata.write('{} atom type(s)\n'.format(1))
+		fdata.write('{} atom types\n'.format(3))
 		# Specify box dimensions
 		fdata.write('{} {} xlo xhi\n'.format(xlo, xhi))
 		fdata.write('{} {} ylo yhi\n'.format(ylo, yhi))
@@ -75,10 +75,10 @@ if f == "data":
 
 		# Write each position 
 		for i,pos in enumerate(coordinates):
-			fdata.write('{} 3 {} {} {}\n'.format(i+1,*pos))
+			fdata.write('{} 1 1 0 {} {} {}\n'.format(i+1,*pos))
 
 		for i,pos in enumerate(coordinates2):
-			fdata.write('{} 3 {} {} {}\n'.format(i+1,*pos))
+			fdata.write('{} 1 1 0 {} {} {}\n'.format(i+len(coordinates)+1,*pos))
 			
 		# If you have bonds and angles, further sections below
 
