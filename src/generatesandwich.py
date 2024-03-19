@@ -78,7 +78,7 @@ if f == "data":
 			fdata.write('{} 1 1 0 {} {} {}\n'.format(i+1,*pos))
 
 		for i,pos in enumerate(coordinates2):
-			fdata.write('{} 1 1 0 {} {} {}\n'.format(i+1,*pos))
+			fdata.write('{} 1 1 0 {} {} {}\n'.format(i+len(coordinates)+1,*pos))
 			
 		# If you have bonds and angles, further sections below
 
