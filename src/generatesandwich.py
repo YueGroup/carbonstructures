@@ -63,7 +63,7 @@ if f == "data":
 		#--- Header ---#
 		# Specify number of atoms and atom types 
 		fdata.write('{} atoms\n'.format(natoms))
-		fdata.write('{} atom type(s)\n'.format(1))
+		fdata.write('{} atom types\n'.format(1))
 		# Specify box dimensions
 		fdata.write('{} {} xlo xhi\n'.format(xlo, xhi))
 		fdata.write('{} {} ylo yhi\n'.format(ylo, yhi))
