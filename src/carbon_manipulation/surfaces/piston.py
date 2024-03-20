@@ -100,10 +100,13 @@ class Piston(object):
             gap [float]: distance between 2 outer sheets to each end of CNT
         """
         # generate CNT coordinates
-        if self.form == "zig":
-            cnt = self.cnt.generate_coords(z=-self.cnt.length*0.5)
-        elif self.form == "arm":
-            cnt = self.xyshift(self.cnt.generate_coords(),(float(self.sheet.generate_coords()[1]) + float(self.sheet.generate_coords()[2])) / 2,(float(self.sheet.generate_coords()[3]) + float(self.sheet.generate_coords()[4])) / 2)
+
+        # if self.form == "zig":
+        #     # cnt = self.cnt.generate_coords(z=-self.cnt.length*0.5)
+        #     cnt = self.cnt.generate_coords()
+        # elif self.form == "arm":
+        
+        cnt = self.xyshift(self.cnt.generate_coords(),(float(self.sheet.generate_coords()[1]) + float(self.sheet.generate_coords()[2])) / 2,(float(self.sheet.generate_coords()[3]) + float(self.sheet.generate_coords()[4])) / 2)
 
         sheet1 = self.sheet.generate_coords(-cnt[1] - gap)
         sheet2 = self.sheet.generate_coords(-cnt[1])

@@ -99,6 +99,10 @@ class ZigzagCNT(object):
     #         side2 = self.axial_circle(z=z1+1.5*self.CC_bond,axis="shifted")
     #         coords += top+side1+side2+bot
     #         z1 += 3*self.CC_bond
+    #     a = coords[0][1]
+    #     print (type(a))
+    #     print (a)
+    #     print (a)
     #     return coords
     
     def generate_coords(self):
@@ -149,5 +153,6 @@ class ZigzagCNT(object):
                 temp[j].append(axis[i])
             for k in temp:
                 coordinates.append(tuple(k))
+
              
         return [coordinates, half]     

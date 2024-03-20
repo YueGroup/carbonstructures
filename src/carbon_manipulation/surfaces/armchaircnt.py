@@ -119,5 +119,5 @@ class ArmchairCNT(object):
                 temp[j].append(axis[i])
             for k in temp:
                 coordinates.append(tuple(k))
-             
+                
         return [coordinates, half]
