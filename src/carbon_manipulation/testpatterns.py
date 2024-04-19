@@ -1,4 +1,5 @@
 import surfaces as s
+import functionalization as f
 import sys, getopt
 from math import cos, pi
 
@@ -19,7 +20,7 @@ for opt, arg in opts:
     elif opt == '-y':
         y = arg
     elif opt == '-c':
-        cc = arg\
+        cc = arg
 
 # Exception for missing required inputs
 
@@ -30,7 +31,7 @@ if x == '' or y == '':
 structure = s.RectangularSheet(float(x),float(y),float(c))
 carbon_graph = structure.carbon_graph()
 
-print("Nodes in the graph:", list(carbon_graph.nodes))
-print("Edges in the graph:", list(carbon_graph.edges))
-print("Number of nodes:", carbon_graph.number_of_nodes())
-print("Number of edges:", carbon_graph.number_of_edges())
+# print(f.truerand(carbon_graph))
+# print(f.pctrand(carbon_graph,60))
+print(f.restrand(carbon_graph))
+
