@@ -1,5 +1,6 @@
 # import numpy as np
 from math import sin, cos, pi
+import networkx as nx
 
 # function to initiate a graphene sheet with size in xy-coordinate
 class RectangularSheet(object):
@@ -114,3 +115,18 @@ class RectangularSheet(object):
         
         return [coordinates, xcoordlist[0], xcoordlist[-1], ycoordlist[0], ycoordlist[-1]]
 
+    def carbon_graph(self, z=0.0):
+        coordinates = self.generate_coords(z)[0]
+        graph = nx.Graph()
+        
+        # Add a node with position attribute for each carbon
+        for index, carbon in enumerate(coordinates):
+            graph.add_node(index, position=carbon)
+
+        # Add edges based on the bond length
+        for i in range(len(coordinates)):
+            for j in range(i + 1, len(coordinates)):
+                if sum((float(coordinates[i][k]) - float(coordinates[j][k]))**2 for k in range(len(coordinates[i])))**0.5 <= (self.CC + 0.01):
+                    graph.add_edge(i, j)
+
+        return graph
