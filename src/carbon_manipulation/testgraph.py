@@ -31,6 +31,8 @@ structure = s.RectangularSheet(float(x),float(y),float(c))
 carbon_graph = structure.carbon_graph()
 
 print("Nodes in the graph:", list(carbon_graph.nodes))
+for node in list(carbon_graph.nodes):
+    return 2
 print("Edges in the graph:", list(carbon_graph.edges))
 print("Number of nodes:", carbon_graph.number_of_nodes())
 print("Number of edges:", carbon_graph.number_of_edges())
