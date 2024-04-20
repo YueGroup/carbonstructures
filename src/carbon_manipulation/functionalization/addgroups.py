@@ -2,15 +2,15 @@ from math import sin, cos, radians, sqrt, asin,pi,floor
 import random
 import copy
 
-def random_gen(low,high,num):
-    index=[]
-    while len(index)<num+1:
-        n=random.randint(low,high)
-        if n not in index:
-            index.append(n)
-    return index
+# def random_gen(low,high,num):
+#     index=[]
+#     while len(index)<num+1:
+#         n=random.randint(low,high)
+#         if n not in index:
+#             index.append(n)
+#     return index
 
-def addgroup(coord,dens,pattern="random",type="OH"):
+def addgroup(coord,pattern="truerandom",type="OH"):
     """
     Returns a modified list of coordinates with functional groups added onto the structure
 
@@ -22,9 +22,7 @@ def addgroup(coord,dens,pattern="random",type="OH"):
     """
     mod_coord = copy.deepcopy(coord)
     #choose C atom to add group (CAN REPLACE WITH GRAPH FUNCTIONS)
-    if pattern=="random":
-        C_coord = random_gen(0,len(coord)-1,floor(dens*len(coord)))
-    for c in C_coord:
+    for c in pattern:
         xC = float(coord[c][0])
         yC = float(coord[c][1])
         zC = float(coord[c][2])
