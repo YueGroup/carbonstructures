@@ -1,7 +1,9 @@
 # import numpy as np
 from math import sin, cos, pi
-from carbon_manipulation.surfaces import data
+from surfaces import data
 import copy
+
+__all__ = ['ArmchairCNT']
 
 # function to initiate an airchair CNT with size in xyz-coordinate
 class ArmchairCNT(object):

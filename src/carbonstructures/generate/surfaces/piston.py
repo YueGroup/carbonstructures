@@ -1,5 +1,7 @@
 from math import sin,cos,pi,sqrt
-from carbon_manipulation.surfaces import armchaircnt,zigzagcnt,rectsheet
+from surfaces import armchaircnt, zigzagcnt, rectsheet
+
+__all__ = ['Piston']
 
 class Piston(object):
     """

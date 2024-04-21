@@ -1,4 +1,4 @@
-from src.carbon_manipulation.surfaces import rectsheet
+from src.carbonstructures.surfaces import rectsheet
 
 #from carbonstructures.examples.sample import add, divide, make_array
 

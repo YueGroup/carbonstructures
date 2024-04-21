@@ -4,6 +4,7 @@
 from math import sin, cos, pi, asin, floor
 import copy
 
+__all__ = ['ZigzagCNT']
 # function to initiate a zigzag CNT with size in xyz-coordinate
 class ZigzagCNT(object):
     """

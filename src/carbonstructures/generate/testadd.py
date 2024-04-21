@@ -1,5 +1,5 @@
-from carbon_manipulation.functionalization import addgroups
-import carbon_manipulation.surfaces as surfaces
+from functionalization import addgroups
+import surfaces as surfaces
 import sys, getopt
 from math import cos, pi
 

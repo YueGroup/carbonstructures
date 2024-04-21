@@ -2,6 +2,8 @@
 from math import sin, cos, pi
 import networkx as nx
 
+__all__ = ['RectangularSheet']
+
 # function to initiate a graphene sheet with size in xy-coordinate
 class RectangularSheet(object):
     """

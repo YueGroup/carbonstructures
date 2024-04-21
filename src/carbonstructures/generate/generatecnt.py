@@ -1,4 +1,4 @@
-import carbon_manipulation.surfaces as surfaces
+import surfaces as surfaces
 import sys, getopt
 
 # opts, args = getopt.getopt(sys.argv[1:],"o:t:p:xyz",["length1=","length2=","plane=","coord1","coord2","coord3"])
