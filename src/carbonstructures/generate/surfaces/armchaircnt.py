@@ -1,6 +1,6 @@
 # import numpy as np
 from math import sin, cos, pi
-from surfaces import data
+from . import data
 import copy
 
 __all__ = ['ArmchairCNT']

@@ -1,5 +1,5 @@
 from math import sin,cos,pi,sqrt
-from surfaces import armchaircnt, zigzagcnt, rectsheet
+from . import armchaircnt, zigzagcnt, rectsheet
 
 __all__ = ['Piston']
 

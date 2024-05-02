@@ -1,2 +1,2 @@
-from functionalization import *
-from surfaces import *
+from .functionalization import *
+from .surfaces import *
