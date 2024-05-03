@@ -48,6 +48,7 @@ def main():
     2. XYZ (.xyz)\n')
     format = input()
     
+    nodes = list(coordinates.nodes(data=True))
     if format == '1':
         print('How many total atom types will be in your system?\n')
         atypes = input()
@@ -60,7 +61,6 @@ def main():
         yhi = "{:.6f}".format(float(ysize) + 1.418)
         zlo = "0.000000"
         zhi = "0.000000"
-        nodes = list(coordinates.nodes(data=True))
         with open(name + '.data','w') as fdata:
             # First line is a comment line 
             fdata.write('Atoms for Graphene Sheet in LAMMPS\n\n')
@@ -81,9 +81,12 @@ def main():
 
             # Write each position 
             for index,data in nodes:
-                fdata.write('{} 1 {} 0 {} {} {}\n'.format(index+1,data['type'],*data['pos']))
+                fdata.write('{} 1 {} 0 {} {} {}\n'.format(index+1,data['type'][1],*data['pos']))
     elif format == '2':
-        return
+        with open(name + '.xyz','w') as fdata:
+            fdata.write('{}\n\n'.format(coordinates.number_of_nodes()))
+            for index,data in nodes:
+                fdata.write('{} {} {} {}\n'.format(data['type'][0],*data['pos']))
     else:
         print("Input not recognized! Please enter 1 or 2") 
     

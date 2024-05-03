@@ -123,7 +123,7 @@ class RectangularSheet(object):
         
         # Add a node with position attribute for each carbon
         for index, carbon in enumerate(coordinates):
-            graph.add_node(index, pos=carbon, type='1')
+            graph.add_node(index, pos=carbon, type=['C','1'])
 
         # Add edges based on the bond length
         for i in range(len(coordinates)):

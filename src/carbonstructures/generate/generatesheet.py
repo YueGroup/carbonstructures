@@ -82,11 +82,11 @@ def gensheet():
 
 # elif f == "xyz":
 #     # Write XYZ data file
-#     with open('rectsheet_' + str(xsize) + "by" + str(ysize) + '.xyz','w') as fdata:
-#         # Specify number of atoms
-#         fdata.write('{}\n\n'.format(natoms))
-#         for pos in coordinates:
-#             fdata.write('C {} {} {}\n'.format(*pos))
+    # with open('rectsheet_' + str(xsize) + "by" + str(ysize) + '.xyz','w') as fdata:
+    #     # Specify number of atoms
+    #     fdata.write('{}\n\n'.format(natoms))
+    #     for pos in coordinates:
+    #         fdata.write('C {} {} {}\n'.format(*pos))
 
 # else:
 #     raise Exception("File format not recognized!")
