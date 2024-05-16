@@ -69,7 +69,7 @@ def main():
             # Specify number of atoms and atom types 
             fdata.write('{} atoms\n'.format(coordinates.number_of_nodes()))
             fdata.write('{} atom types\n'.format(int(atypes)))
-            
+                
             # Specify box dimensions
             fdata.write('{} {} xlo xhi\n'.format(xlo, xhi))
             fdata.write('{} {} ylo yhi\n'.format(ylo, yhi))
