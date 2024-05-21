@@ -1,4 +1,4 @@
-import surfaces as surfaces
+from .surfaces import *
 import sys, getopt
 
 # def generatecnt():

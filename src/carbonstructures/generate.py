@@ -1,44 +1,61 @@
 from generate import *
+from modify import *
 import time as t
+import sys
 
 def main():
-    print('Thank you for using the carbonstructures python package! Please respond with the number associated with your choices.\n')
+    print('Thank you for using the carbonstructures python package! Enter exit() at any time to exit.\n')
     
     t.sleep(1)
     
-    # Prompt the user for some type of input 
+    # Prompt for structure generation
     print('What carbon system would you like to generate?\n \
     1. Graphene Sheet\n \
     2. Carbon Nanotube\n \
     3. Graphene Sandwich\n \
     4. Graphene Piston\n \
     5. Other\n')
-    
+
     system = input()
+
+    # Non-generation options
+    while system not in ['1','2','3','4']:
+        if system == 'exit()':
+            sys.exit()
+        elif system == '5':
+            print("Sorry! This package does not currently support the generation of other structures. Please select another option or type 'exit()' to exit.")
+        else:
+            print("Input not recognized! Please select an available option: ")
+        system = input()
     
-    # Need to fix these to loop until desired output is received
-    
+    # Generation options
     if system == '1':
         structure = gensheet()
-        carbons = structure.carbon_graph()
+        box = sheetbox(structure)
     
     elif system in ['2','3','4']:
-        print("Sorry! This is currently unfinished.")
+        print("This option is currently unfinished.")
+        sys.exit()
     
-    elif system == '5':
-        print("Sorry! This package currently does not support the generation of other carbon systems.")
-    
-    print('Will you be functionalizing this system? Enter Y or N.\n')
-    
-    # Need to fix these to loop until desired output is received
+    # Prompt for functionalization
+    print('Will you be functionalizing this system?\n')
     
     willfunct = input()
+
+    # Unavailable options
+    while willfunct not in ['Y','N']:
+        if willfunct == 'exit()':
+            sys.exit()
+        else:
+            print("Input not recognized! Please select an available option: ")
+        willfunct = input()
     
+    # Functionalization options
     if willfunct == 'Y':
-        coordinates = addgroup(carbons)
+        coordinates = addgroup(structure.carbon_graph())
     
     elif willfunct == 'N':
-        coordinates = carbons
+        coordinates = structure.carbon_graph()
     
     print('What would you like to name your data file?\n')
     name = input()
@@ -48,19 +65,17 @@ def main():
     2. XYZ (.xyz)\n')
     format = input()
     
+    while format not in ['1','2']:
+        if format == 'exit()':
+            sys.exit()
+        else:
+            print("Input not recognized! Please select an available option: ")
+        format = input()
+
     nodes = list(coordinates.nodes(data=True))
     if format == '1':
         print('How many total atom types will be in your system?\n')
         atypes = input()
-        
-        xsize = "{:.6f}".format(structure.xlen)
-        ysize = "{:.6f}".format(structure.ylen)
-        xlo = "{:.6f}".format(1.418 * cos(pi / 6.0))
-        xhi = "{:.6f}".format(float(xsize) - float(xlo))
-        ylo = "0.000000"
-        yhi = "{:.6f}".format(float(ysize) + 1.418)
-        zlo = "0.000000"
-        zhi = "0.000000"
         with open(name + '.data','w') as fdata:
             # First line is a comment line 
             fdata.write('Atoms for Graphene Sheet in LAMMPS\n\n')
@@ -71,9 +86,9 @@ def main():
             fdata.write('{} atom types\n'.format(int(atypes)))
                 
             # Specify box dimensions
-            fdata.write('{} {} xlo xhi\n'.format(xlo, xhi))
-            fdata.write('{} {} ylo yhi\n'.format(ylo, yhi))
-            fdata.write('{} {} zlo zhi\n'.format(zlo, zhi))
+            fdata.write('{} {} xlo xhi\n'.format(box[0], box[1]))
+            fdata.write('{} {} ylo yhi\n'.format(box[2], box[3]))
+            fdata.write('{} {} zlo zhi\n'.format(box[4], box[5]))
             fdata.write('\n')
 
             # Atoms section
