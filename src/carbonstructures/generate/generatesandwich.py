@@ -1,4 +1,4 @@
-import carbon_manipulation.surfaces as surfaces
+import surfaces as surfaces
 import sys, getopt
 
 from math import cos, pi

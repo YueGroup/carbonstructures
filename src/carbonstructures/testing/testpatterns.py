@@ -1,5 +1,5 @@
-import surfaces as s
-import functionalization as f
+import generate.surfaces as s
+import generate.functionalization as f
 import sys, getopt
 from math import cos, pi
 

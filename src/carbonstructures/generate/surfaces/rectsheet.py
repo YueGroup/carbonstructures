@@ -2,6 +2,8 @@
 from math import sin, cos, pi
 import networkx as nx
 
+__all__ = ['RectangularSheet']
+
 # function to initiate a graphene sheet with size in xy-coordinate
 class RectangularSheet(object):
     """
@@ -121,7 +123,7 @@ class RectangularSheet(object):
         
         # Add a node with position attribute for each carbon
         for index, carbon in enumerate(coordinates):
-            graph.add_node(index, position=carbon)
+            graph.add_node(index, pos=carbon, type=['C','1'])
 
         # Add edges based on the bond length
         for i in range(len(coordinates)):

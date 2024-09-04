@@ -1,4 +1,5 @@
-import carbon_manipulation.surfaces as surfaces
+from functionalization import addgroups
+import surfaces as surfaces
 import sys, getopt
 from math import cos, pi
 
@@ -32,18 +33,23 @@ if x == '' or y == '' or f == '':
 # Generate graphene sheet object with size x, y and bond length c
 structure = surfaces.RectangularSheet(float(x),float(y),float(c))
 
-# Define box sizes
-xsize = "{:.6f}".format(structure.xlen)
-ysize = "{:.6f}".format(structure.ylen)
-xlo = "{:.6f}".format(-float(c) * cos(pi / 6.0))
-xhi = "{:.6f}".format(float(xsize) - float(xlo))
-ylo = "0.000000"
-yhi = "{:.6f}".format(float(ysize) + float(c))
-zlo = "0.000000"
-zhi = "0.000000"
 
+# Define box sizes
+# MAKE BOX SIZE HUGE (THIS NOT THE RIGHT SIZE)
+xsize = "{:.6f}".format(100)
+ysize = "{:.6f}".format(100)
+xlo = "{:.6f}".format(-20)
+xhi = "{:.6f}".format(30)
+ylo = "-20"
+yhi = "{:.6f}".format(30)
+zlo = "0.000000"
+zhi = "20"
+
+#NUMBER OF ATOMS INCREASES
 coordinates = structure.generate_coords()[0]
-natoms = len(coordinates)
+new = addgroups.addgroup(coordinates,0.25)
+natoms = len(new)
+print(natoms)
 
 if f == "data":
 	# Write LAMMPS data file
@@ -72,11 +78,16 @@ if f == "data":
 
 elif f == "xyz":
     # Write XYZ data file
-    with open('rectsheet_' + str(xsize) + "by" + str(ysize) + '.xyz','w') as fdata:
+    with open('testsheet' + '.xyz','w') as fdata:
         # Specify number of atoms
         fdata.write('{}\n\n'.format(natoms))
-        for pos in coordinates:
+        for pos in new[:len(coordinates)]:
             fdata.write('C {} {} {}\n'.format(*pos))
+
+        it=iter(new[len(coordinates):])
+        for pos1,pos2 in zip(it,it):
+            fdata.write('O {} {} {}\n'.format(*pos1))
+            fdata.write('H {} {} {}\n'.format(*pos2))
 
 else:
     raise Exception("File format not recognized!")

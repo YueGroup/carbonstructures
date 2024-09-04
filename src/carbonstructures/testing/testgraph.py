@@ -1,4 +1,4 @@
-import surfaces as s
+import generate.surfaces as s
 import sys, getopt
 from math import cos, pi
 
