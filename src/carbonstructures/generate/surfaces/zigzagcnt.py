@@ -141,7 +141,7 @@ class ZigzagCNT(object):
                 axis_coord += self.CC_bond * sin(pi / 6.0)
             axis_ind +=1
         
-        print(axis)
+        #print(axis)
         
         # attach coordinates
         coordinates = []
