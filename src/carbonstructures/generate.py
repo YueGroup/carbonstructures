@@ -8,15 +8,15 @@ def main():
         t.sleep(1)
         
         # Prompt user to select a carbon structure
-        print('What carbon system would you like to generate?\n \
+        print("What carbon system would you like to generate?\n \
         1. Graphene Sheet\n \
         2. Carbon Nanotube\n \
         3. Graphene Sandwich\n \
-        4. Graphene Piston\n')
+        4. Graphene Piston")
         
         # Loop until valid system is chosen
         system = '0'
-        while system not in ['1','2','3','4']: 
+        while system not in ['1']: 
             system = input()
 
             if system == '1':
@@ -24,13 +24,13 @@ def main():
                 carbons = structure.carbon_graph()
         
             elif system in ['2','3','4']:
-                print("Sorry! This is currently unfinished. Please try again.")
+                print("\nSorry! This is currently unfinished. Please try again.")
             
             else:
-                print("Input not recognized! Please try again.")
+                print("\nInput not recognized! Please try again.")
 
         # Prompt user to functionalize system
-        print('Will you be functionalizing this system? Enter Y or N.\n')
+        print("Will you be functionalizing this system? Enter Y or N.\n")
         
         # Loop until user chooses (not) to functionalize the structure
         willfunct = '0'
@@ -38,20 +38,24 @@ def main():
             willfunct = input()
 
             if willfunct == 'Y':
-                coordinates = addgroup(carbons)
+                if system in ['1']:
+                    coordinates = addgroup(carbons)
+
+                else:
+                    print("\nSorry! We currently do not support functionalization of the system you chose.")
 
             elif willfunct == 'N':
                 coordinates = carbons
 
             else:
-                print("Input not recognized! Please try again.")
+                print("\nInput not recognized! Please try again.")
         
         # Prompt user for file name
-        print('What would you like to name your data file?\n')
+        print('\nWhat would you like to name your data file?\n')
         name = input()
         
         # Prompt user for file type
-        print('What format would you like your data file in?\n \
+        print('\nWhat format would you like your data file in?\n \
         1. LAMMPS datafile (.data)\n \
         2. XYZ (.xyz)\n')
 
