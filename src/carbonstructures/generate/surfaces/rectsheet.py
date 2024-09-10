@@ -130,5 +130,5 @@ class RectangularSheet(object):
             for j in range(i + 1, len(coordinates)):
                 if sum((float(coordinates[i][k]) - float(coordinates[j][k]))**2 for k in range(len(coordinates[i])))**0.5 <= (self.CC + 0.01):
                     graph.add_edge(i, j)
-
+        
         return graph
