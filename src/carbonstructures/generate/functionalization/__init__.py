@@ -1,3 +1,3 @@
 from .groups import *
-from .addgroups import *
+from .functsheet import *
 from .patterns import *

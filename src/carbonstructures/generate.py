@@ -39,7 +39,7 @@ def main():
 
             if willfunct == 'Y':
                 if system in ['1']:
-                    coordinates = addgroup(carbons)
+                    coordinates = functsheet(carbons)
 
                 else:
                     print("\nSorry! We currently do not support functionalization of the system you chose.")

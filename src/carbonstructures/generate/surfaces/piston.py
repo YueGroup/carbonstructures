@@ -1,5 +1,5 @@
 from math import sin,cos,pi,sqrt
-from . import armchaircnt, zigzagcnt, rectsheet
+from . import armchaircnt, sheet, zigzagcnt
 
 __all__ = ['Piston']
 
@@ -35,7 +35,7 @@ class Piston(object):
         elif cntform == "chiral":
             pass
             # self.cnt = "unfinished"
-        self.sheet = rectsheet.RectangularSheet(xlen,ylen)
+        self.sheet = sheet.RectangularSheet(xlen,ylen)
     
     def poke(self, coordinates, delta=2.0):
         """

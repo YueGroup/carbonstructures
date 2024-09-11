@@ -8,7 +8,7 @@ __all__ = ['RectangularSheet']
 class RectangularSheet(object):
     """
     Functions for initializing, generating coordinates for, and functionalizing rectangular graphene sheets
-
+s
     Defaults:
         x-axis: zigzag side
         y-axis: armchair side
@@ -102,13 +102,6 @@ class RectangularSheet(object):
                 for ind1 in range(len(xcoordlist))
                 if (((ind2 + 1) % 4 == 0 or ind2 % 4 == 0) and ind1 % 2) or 
                    (not ((ind2 + 1) % 4 == 0 or ind2 % 4 == 0) and not ind1 % 2)]
-
-#        if self.yhex % 2: 
-#            coordinates.remove([xcoordlist[-1], 0])
-#            coordinates.remove([xcoordlist[-1], ycoordlist[-1]])
-#        else: 
-#            coordinates.remove([xcoordlist[-1], 0])
-#            coordinates.remove([0, ycoordlist[-1]])
 
         for index in range(len(coordinates)):
             coordinates[index].append("{:.6f}".format(z))

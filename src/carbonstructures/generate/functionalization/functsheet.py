@@ -1,10 +1,13 @@
 from math import sin, cos, radians, sqrt, asin, pi
+from .patterns import *
 from .groups import *
 import copy
 
-def addgroup(coord,pattern="truerand",type="OH"):
+__all__ = ['functsheet']
+
+def functsheet(coord_graph):
     """
-    Returns a modified list of coordinates with functional groups added onto the structure
+    Returns a graph containing coordinates and bonds for modified (functionalized) carbon system
 
     Parameters:
     struct[obj]: an object of the carbon structure to functionalize
@@ -12,19 +15,9 @@ def addgroup(coord,pattern="truerand",type="OH"):
     pattern[str]: functionalized groups patterning: "random", "linear", "patch", or "patterned"
     type[str]: chemical notation for functional group
     """
-    mod_coord = copy.deepcopy(coord)
+    funct_coord_graph = copy.deepcopy(coord_graph)
 
-    # select pattern
-    #if pattern 
-
-    #elif pattern = 
-
-    #choose C atom to add group (CAN REPLACE WITH GRAPH FUNCTIONS)
-    for c in pattern:
-        xC = float(coord[c][0])
-        yC = float(coord[c][1])
-        zC = float(coord[c][2])
-    #retrieve bonds and angle data from functional group
+    
         
     return mod_coord
 
