@@ -1,6 +1,8 @@
-#__all__ = ['OH']
+__all__ = ['grps']
 
-#def OH(graph):
+grps = {
+    
+}
     
 
 # if type=="OH":
