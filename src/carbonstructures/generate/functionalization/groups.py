@@ -12,5 +12,31 @@ grpdata = {
             'length': 0.98,
             'angle': 107.9
         }
-    }
+    },
+    'SH': {
+        'atoms': 2,
+        'CS': {
+            'added_atom': ['S', '4'],
+            'length': 1.345
+        },
+        'SH': {
+            'added_atom': ['H', '3'],
+            'length': 1.341,
+            'angle': 109.5
+        }
+    },
+    'Cl': {
+        'atoms': 1,
+        'CCl': {
+            'added_atom': ['Cl', '5'],
+            'length': 2.124
+        }
+    },
+    'Br': {
+        'atoms': 1,
+        'CBr': {
+            'added_atom': ['Br', '6'],
+            'length': 1.937
+        }
+    }   
 }
