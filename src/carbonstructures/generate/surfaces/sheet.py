@@ -7,7 +7,7 @@ __all__ = ['RectangularSheet']
 # function to initiate a graphene sheet with size in xy-coordinate
 class RectangularSheet(object):
     """
-    Functions for initializing, generating coordinates for, and functionalizing rectangular graphene sheets
+    Functions for initializing graphene sheets
 s
     Defaults:
         x-axis: zigzag side

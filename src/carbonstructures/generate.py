@@ -11,14 +11,14 @@ def main():
         # Prompt user to select a carbon structure
         print("What carbon system would you like to generate?\n \
         1. Graphene Sheet\n \
-        2. Carbon Nanotube\n \
-        3. Graphene Sandwich\n \
+        2. Graphene Sandwich\n \
+        3. Carbon Nanotube\n \
         4. Graphene Piston")
         
         # Loop until valid system is chosen
         system = input()
-        while system not in ['1']: 
-            if system in ['2','3','4']:
+        while system not in ['1', '2']: 
+            if system in ['3','4']:
                 print("\nSorry! This is currently unfinished. Please try again.")
             
             else:
@@ -27,8 +27,12 @@ def main():
             system = input()
 
         if system == '1':
-                structure = gensheet()
-                carbons = structure.carbon_graph()
+            structure = gensheet()
+        
+        elif system == '2':
+            structure = gensandwich()
+
+        carbons = structure.carbon_graph()
 
         # Prompt user to functionalize system
         print("Will you be functionalizing this system? Enter Y or N.\n")
