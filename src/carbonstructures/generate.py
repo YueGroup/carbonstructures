@@ -75,7 +75,7 @@ def main():
             print("How many total atom types will be in your simulation?\n")
             atypes = input()
             
-            # Calculate box dimensions
+            # Calculate box dimensions_completed
             if system == '1':
                 xsize = "{:.6f}".format(structure.xlen)
                 ysize = "{:.6f}".format(structure.ylen)
