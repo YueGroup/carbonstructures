@@ -87,7 +87,6 @@ def main():
                 zhi = "0.000000"
             
             elif system == '2':
-            # needs to be redone
                 xsize = "{:.6f}".format(structure.sheet.xlen)
                 ysize = "{:.6f}".format(structure.sheet.ylen)
                 xlo = "{:.6f}".format(-1.418 * cos(pi / 6.0))
