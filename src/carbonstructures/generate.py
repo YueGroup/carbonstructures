@@ -79,8 +79,8 @@ def main():
             if system == '1':
                 xsize = "{:.6f}".format(structure.xlen)
                 ysize = "{:.6f}".format(structure.ylen)
-                xlo = "{:.6f}".format(1.418 * cos(pi / 6.0))
-                xhi = "{:.6f}".format(float(xsize) - float(xlo))
+                xlo = "{:.6f}".format(-1.418 * cos(pi / 6.0))
+                xhi = "{:.6f}".format(float(xsize))
                 ylo = "0.000000"
                 yhi = "{:.6f}".format(float(ysize) + 1.418)
                 zlo = "0.000000"
@@ -88,12 +88,14 @@ def main():
             
             elif system == '2':
             # needs to be redone
-                xlo = "0.000000"
-                xhi = "0.000000"
+                xsize = "{:.6f}".format(structure.sheet.xlen)
+                ysize = "{:.6f}".format(structure.sheet.ylen)
+                xlo = "{:.6f}".format(-1.418 * cos(pi / 6.0))
+                xhi = "{:.6f}".format(float(xsize))
                 ylo = "0.000000"
-                yhi = "0.000000"
+                yhi = "{:.6f}".format(float(ysize))
                 zlo = "0.000000"
-                zhi = "0.000000"
+                zhi = "{:.6f}".format(structure.gap)
 
             with open(name + '.data','w') as fdata:
                 # First line is a comment line 
