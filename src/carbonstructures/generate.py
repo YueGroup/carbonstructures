@@ -46,7 +46,8 @@ def main():
         if willfunct == 'Y':
             if system in ['1']:
                     coordinates = functsheet(carbons)
-
+            elif system in ['2']:
+                    coordinates = functsandwich(carbons)
             else:
                     print("\nSorry! We currently do not support functionalization of the system you chose.")
 
