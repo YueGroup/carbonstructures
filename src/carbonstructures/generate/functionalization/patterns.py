@@ -1,12 +1,12 @@
 import random as r
 import math as m
 
-__all__ = ['truerand','pctrand','restrand']
+__all__ = ['truerandsheet','pctrandsheet','restrandsheet','pctrandsandwich']
 
 def _findneighbors(graph,node):
     return list(graph.neighbors(node))
 
-def truerand(networkC):
+def truerandsheet(networkC):
     # truly random number and selection of carbons
     trcarbons = []
     pctcoverage = r.randint(0,100) / 100
@@ -17,7 +17,7 @@ def truerand(networkC):
             trcarbons.append(index)
     return trcarbons
 
-def pctrand(networkC,pct):
+def pctrandsheet(networkC,pct):
     # randomly selected carbons with user-specified percent coverage
     prcarbons = []
     pctcoverage = pct / 100
@@ -28,7 +28,8 @@ def pctrand(networkC,pct):
             prcarbons.append(index)
     return prcarbons
 
-def restrand(networkC):
+def restrandsheet(networkC):
+    # randomly selected carbons with restricted coverage
     rrcarbons = []
     pctcoverage = r.randint(0,40) / 100
     numC =  m.floor(pctcoverage * networkC.number_of_nodes())
@@ -37,3 +38,20 @@ def restrand(networkC):
         if set(rrcarbons).isdisjoint(set([index] + _findneighbors(networkC,index))):
             rrcarbons.append(index)
     return rrcarbons
+
+def pctrandsandwich(networkC,pct):
+    # randomly selected carbons with user-specified percent coverage (for sandwich)
+    prcarbons1 = []
+    prcarbons2 = []
+    print(networkC.number_of_nodes() / 2)
+    pctcoverage = pct / 100
+    numC =  m.floor(pctcoverage * (networkC.number_of_nodes() / 2))
+    while len(prcarbons1) < numC:
+        index = r.randint(0,int(networkC.number_of_nodes() / 2) - 1)
+        if index not in prcarbons1:
+            prcarbons1.append(index)
+    while len(prcarbons2) < numC:
+        index = r.randint(int(networkC.number_of_nodes() / 2),networkC.number_of_nodes() - 1)
+        if index not in prcarbons2:
+            prcarbons2.append(index)
+    return [prcarbons1, prcarbons2]

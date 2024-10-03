@@ -29,7 +29,7 @@ def functsheet(coord_graph):
         1. True Random\n \
         2. Random - Percent Coverage\n \
         3. Random - Restricted Coverage\n")
-    patternlist = [truerand, pctrand, restrand]
+    patternlist = [truerandsheet, pctrandsheet, restrandsheet]
     pattern = input()
     
     # Loop until valid pattern is chosen
@@ -53,17 +53,11 @@ def functsheet(coord_graph):
     
     else:
         mod_indices = patternlist[int(pattern) - 1](coord_graph)
-    
-    print(mod_indices)
 
     mod_coord_graph = copy.deepcopy(coord_graph)
     functdata = list(grpdata[grp])
 
-    print(grpdata[grp][functdata[0]])
-    print(mod_coord_graph.nodes[2])
-    print(mod_coord_graph.number_of_nodes())
     for index in mod_indices:
-        print(index)
         c_coords = mod_coord_graph.nodes[index]['pos']
 
         # Functional group with 1 atom (perpendicular to sheet)
@@ -79,10 +73,6 @@ def functsheet(coord_graph):
             x1 = c_coords[0]
             y1 = c_coords[1]
             z1 = "{:.6f}".format(float(c_coords[2]) + grpdata[grp][functdata[1]]['length'])
-
-            print(str(mod_coord_graph.number_of_nodes()))
-            print(str((x1,y1,z1)))
-            print(str(grpdata[grp][functdata[1]]['added_atom']))
             mod_coord_graph.add_node(mod_coord_graph.number_of_nodes(), pos=(x1,y1,z1), type=grpdata[grp][functdata[1]]['added_atom'])
 
             # Calculate coordinates and add node for atom 2
@@ -92,6 +82,4 @@ def functsheet(coord_graph):
             z2 = "{:.6f}".format(float(z1) + grpdata[grp][functdata[2]]['length'] * sin(radians(grpdata[grp][functdata[2]]['angle'] - 90)))
             mod_coord_graph.add_node(mod_coord_graph.number_of_nodes(), pos=(x2,y2,z2), type=grpdata[grp][functdata[2]]['added_atom'])
 
-    print(coord_graph)
-    print(mod_coord_graph)
     return mod_coord_graph
