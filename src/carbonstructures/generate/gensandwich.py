@@ -10,5 +10,5 @@ def gensandwich():
     x = float(input("x-direction length: "))
     y = float(input("y-direction length: "))
     g = float(input("Gap size: "))
-
-    return Sandwich(x,y,g)
+    cc= float(input("C-C bond length in Angstrom: "))
+    return Sandwich(x,y,g,cc)

@@ -23,7 +23,7 @@ class Sandwich(object):
     def __init__(self, x, y, g, CC=1.418):
         self.gap = g
         self.CC = CC
-        self.sheet = sheet.RectangularSheet(x,y)
+        self.sheet = sheet.RectangularSheet(x,y,CC)
         
     def generate_coords(self):
         sheet1 = self.sheet.generate_coords()[0]

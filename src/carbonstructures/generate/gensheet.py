@@ -9,5 +9,5 @@ def gensheet():
     print("Please enter your system parameters.\n")
     x = float(input("x-direction length: "))
     y = float(input("y-direction length: "))
-    
-    return RectangularSheet(x,y)
+    cc= float(input("C-C bond length in Angstrom: "))
+    return RectangularSheet(x,y,cc)
