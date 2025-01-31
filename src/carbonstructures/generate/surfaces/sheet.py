@@ -45,6 +45,10 @@ s
         # calculate sheet dimensions in hexagonal units 
         self.xhex = (x - self.CC * cos(pi / 6.0)) // xunit
         self.yhex = (y - self.CC * sin(pi / 6.0)) // yunit
+        print(self.yhex)
+        if self.yhex % 2 == 0:
+            self.yhex -= 1
+            print(self.yhex)
         
         # raise exception if specified parameters are too small
         if (self.xhex <= 0) or (self.yhex <= 0): 

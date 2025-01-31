@@ -16,7 +16,7 @@ class Sandwich(object):
         z-axis: plane (z=0)
 
     Attribute notes:
-        specified length paramters are MAXIMUM lengths. Sheets cannot be generated for all x/y lengths; the generation will
+        specified length parameters are MAXIMUM lengths. Sheets cannot be generated for all x/y lengths; the generation will
         provide the closest estimate that is smaller than the specified parameters
     """
 
