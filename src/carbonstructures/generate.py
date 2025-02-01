@@ -2,47 +2,63 @@ from generate import *
 from math import sin, cos, pi
 import time as t
 
+def get_min_max(data):
+    # Extract numerical positions from the 'pos' attributes
+    positions = [tuple(map(float, node_data['pos'])) for _, node_data in data]
+
+    # Unpack x, y, z coordinates
+    x_vals, y_vals, z_vals = zip(*positions)
+
+    # Compute min and max values
+    return {
+        'min_x': min(x_vals), 'max_x': max(x_vals),
+        'min_y': min(y_vals), 'max_y': max(y_vals),
+        'min_z': min(z_vals), 'max_z': max(z_vals)
+    }
+
 def main():
     try:
+        # Program start-up
         print("Thank you for using the carbonstructures python package!\n")
-
         t.sleep(1)
         
-        # Prompt user to select a carbon structure
+        # Prompts user to select a carbon structure
         print("What carbon system would you like to generate?\n \
         1. Graphene Sheet\n \
         2. Graphene Sandwich\n \
         3. Carbon Nanotube\n \
         4. Graphene Piston")
         
-        # Loop until valid system is chosen
+        # Loops through until valid system is chosen
         system = input()
         while system not in ['1', '2']: 
+            # Unfinished features: carbon nanotube and graphene piston
             if system in ['3','4']:
                 print("\nSorry! This is currently unfinished. Please try again.")
-            
+            # Unrecognized input
             else:
                 print("\nInput not recognized! Please try again.")
-
+            # Re-prompt user
             system = input()
 
+        # Generates chosen system and stores system object as 'structure'
         if system == '1':
             structure = gensheet()
-        
         elif system == '2':
             structure = gensandwich()
-
+        # Generates structure coordinates in graph form
         carbons = structure.carbon_graph()
 
         # Prompt user to functionalize system
         print("Will you be functionalizing this system? Enter Y or N.\n")
         
-        # Loop until user chooses (not) to functionalize the structure
+        # Loops through until user chooses (not) to functionalize the structure
         willfunct = input()
         while willfunct not in ['Y','N']:
             print("\nInput not recognized! Please try again.")
             willfunct = input()
         
+        # Generates functionalized coordinates in graph form and stores as 'coordinates'
         if willfunct == 'Y':
             if system in ['1']:
                     coordinates = functsheet(carbons)
@@ -51,6 +67,7 @@ def main():
             else:
                     print("\nSorry! We currently do not support functionalization of the system you chose.")
 
+        # Stores unfunctionalized coordinate graph as 'coordinates'
         elif willfunct == 'N':
                 coordinates = carbons
         
@@ -65,37 +82,25 @@ def main():
 
         # Select graph nodes as list of coordinates. Loop until valid file format is chosen
         nodes = list(coordinates.nodes(data=True))
+        bounds = get_min_max(nodes)
         format = input()
         while format not in ['1','2']:
             print("Input not recognized! Please enter 1 or 2")
             format = input()
 
-            # Lammps datafile (for simulations)
+        # Lammps datafile (for simulations)
         if format == '1':
             # Prompt for number of atom types headline
             print("How many total atom types will be in your simulation?\n")
             atypes = input()
             
-            # Calculate box dimensions_completed
-            if system == '1':
-                xsize = "{:.6f}".format(structure.xlen)
-                ysize = "{:.6f}".format(structure.ylen)
-                xlo = "{:.6f}".format(-1.418 * cos(pi / 6.0))
-                xhi = "{:.6f}".format(float(xsize))
-                ylo = "0.000000"
-                yhi = "{:.6f}".format(float(ysize) + 1.418)
-                zlo = "0.000000"
-                zhi = "0.000000"
-            
-            elif system == '2':
-                xsize = "{:.6f}".format(structure.sheet.xlen)
-                ysize = "{:.6f}".format(structure.sheet.ylen)
-                xlo = "{:.6f}".format(-1.418 * cos(pi / 6.0))
-                xhi = "{:.6f}".format(float(xsize))
-                ylo = "0.000000"
-                yhi = "{:.6f}".format(float(ysize))
-                zlo = "0.000000"
-                zhi = "{:.6f}".format(structure.gap)
+            # Calculate box dimensions
+            xlo = "{:.6f}".format(bounds['min_x'])
+            xhi = "{:.6f}".format(bounds['max_x'] + structure.CC * cos(pi / 6))
+            ylo = "{:.6f}".format(bounds['min_y'])
+            yhi = "{:.6f}".format(bounds['max_y'] + structure.CC)
+            zlo = "{:.6f}".format(bounds['min_z'])
+            zhi = "{:.6f}".format(bounds['max_z'])
 
             with open(name + '.data','w') as fdata:
                 # First line is a comment line 
@@ -125,6 +130,7 @@ def main():
                 for index,data in nodes:
                     fdata.write('{} {} {} {}\n'.format(data['type'][0],*data['pos']))
     
+    # Exits the script any time user attempts a keyboard interrupt (Ctrl + C)
     except KeyboardInterrupt:
         print("\nProgram interrupted! Exiting gracefully...")
 
