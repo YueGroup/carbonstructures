@@ -7,122 +7,103 @@ __all__ = ['RectangularSheet']
 # function to initiate a graphene sheet with size in xy-coordinate
 class RectangularSheet(object):
     """
-    Functions for initializing graphene sheets
-s
+    Object class for a rectangular graphene sheet
+
     Defaults:
         x-axis: zigzag side
         y-axis: armchair side
         z-axis: plane (z=0)
     
     Instance attributes: 
-        len1 [float]: total specified length in x-direction
-        len2 [float]: total specified length in y-direction
-        CC [float]: carbon-carbon bond length
-        hex_x [int]: number of hexagons in the x-direction
-        hex_y [int]: number of hexagons in the y-direction
+        CC [float]: carbon-carbon bond length (Angstroms)
+        xlen [float]: actual length (in the x-direction) (Angstroms)
+        ylen [float]: actual width (in the y-direction) (Angstroms)
 
     Attribute notes:
-        specified length paramters are MAXIMUM lengths. Sheets cannot be generated for all x/y lengths; the generation will
+        Specified length paramters are MAXIMUM lengths. Sheets cannot be generated for all x,y lengths; the generation will
         provide the closest estimate that is smaller than the specified parameters
     """
 
-    def __init__(self, x, y, CC=1.418):
-        """
-        Creates a RectangularSheet instance:
-            generated sheet is a VALID structure (no partial hexagons)
-            generated sheet has dimensional lengths LESS THAN OR EQUAL TO x and y
-
-        Preconditions: 
-            xlen, ylen are floats
-        """
-        # set CC bond length
+    # object initialization
+    def __init__(self, x, y, CC):
+        # Initialize CC bond length
         self.CC = CC
 
-        # hexagon unit lengths
+        # Calculate hexagonal unit lengths
         xunit = 2.0 * self.CC * cos(pi / 6.0)
         yunit = (1.0 + sin(pi / 6.0)) * self.CC
 
-        # calculate sheet dimensions in hexagonal units 
+        # Calculate sheet dimensions in terms of hexagonal units 
         self.xhex = (x - self.CC * cos(pi / 6.0)) // xunit
         self.yhex = (y - self.CC * sin(pi / 6.0)) // yunit
-        print(self.yhex)
+        # Corrects y-hexagon count to be an odd number
         if self.yhex % 2 == 0:
             self.yhex -= 1
-            print(self.yhex)
-        
-        # raise exception if specified parameters are too small
+        # Raise exception if the specified sheet dimensions are too small
         if (self.xhex <= 0) or (self.yhex <= 0): 
             raise Exception("Sheet dimensions too small!")
-        
-        # length and width of sheet (no partial hexagons)
+        # Calculates length and width of sheet (no partial hexagons)
         self.xlen = self.xhex * xunit
         self.ylen = self.yhex * yunit + self.CC * sin(pi / 6.0)
-        
+    
+    # Generate coordinates (list of tuples form)
     def generate_coords(self, z=0.0):
-    # def generate_coords(self,z=0.0):
-        """
-        Returns an list of coordinates, in tuples (x,y), representing the rectangular graphene sheet
-
-        Parameters: 
-            z: z-coordinate of sheet (default 0.00)
-        """
-        #need to have the option to specify x and y (at bottom left corner) for sheets in piston code
-        # is the starting x, y here from bottom left
-
-
         # columns: number of unique x-coordinates
-        columns = 2 * self.xhex + 2
         # rows: number of unique y-coordinates
+        columns = 2 * self.xhex + 2
         rows = 2 * self.yhex + 2
 
-        # generate list of x-coordinates
+        # Generate list of x-coordinates, starting at x = 0
         xcoordlist = []
-        # xcoord = -(self.CC * cos(pi / 6.0)) + x
-        xcoord = -(self.CC * cos(pi / 6.0))
+        xcoord = 0
         xcount = 0
         while xcount < columns:
-            # xcoordlist.append(float("{:.6f}".format(xcoord)))
+            # Formats x-coordinates to 6 decimal places
             xcoordlist.append("{:.6f}".format(xcoord))
             xcoord += self.CC * cos(pi / 6.0)
             xcount += 1
 
-        # generate list of y-coordinates
+        # Generate list of y-coordinates, starting at y = 0
         ycoordlist = []
-        # ycoord = y
         ycoord = 0
         ycount = 0
         while ycount < rows:
-            # ycoordlist.append(float("{:.6f}".format(ycoord))) 
-            ycoordlist.append("{:.6f}".format(ycoord))    
+            # Formats y-coordinates to 6 decimal places
+            ycoordlist.append("{:.6f}".format(ycoord))
+            # Alternates value added to y-coordinates
             if ycount % 2: 
                 ycoord += self.CC
             else:
                 ycoord += self.CC * sin(pi / 6.0)
             ycount += 1
 
-        # generate coordinates
+        # Generate list of [x,y] coordinate lists
         coordinates = [[xcoordlist[ind1], ycoordlist[ind2]]
                 for ind2 in range(len(ycoordlist))
                 for ind1 in range(len(xcoordlist))
                 if (((ind2 + 1) % 4 == 0 or ind2 % 4 == 0) and ind1 % 2) or 
                    (not ((ind2 + 1) % 4 == 0 or ind2 % 4 == 0) and not ind1 % 2)]
 
+        # Append z-coordinates and convert coordinate lists to tuples
         for index in range(len(coordinates)):
+            # Formats z-coordinates to 6 decimal places
             coordinates[index].append("{:.6f}".format(z))
-            # coordinates[index].append("{:.6f}".format(z))
             coordinates[index] = tuple(coordinates[index])
         
-        return [coordinates, xcoordlist[0], xcoordlist[-1], ycoordlist[0], ycoordlist[-1]]
+        return coordinates
+        # return [coordinates, xcoordlist[0], xcoordlist[-1], ycoordlist[0], ycoordlist[-1]]
 
+    # Generates coordinates (graph form)
     def carbon_graph(self, z=0.0):
-        coordinates = self.generate_coords(z)[0]
+        coordinates = self.generate_coords(z)
         graph = nx.Graph()
         
-        # Add a node with position attribute for each carbon
-        for index, carbon in enumerate(coordinates):
-            graph.add_node(index, pos=carbon, type=['C','1'])
+        # Add a node for each atom
+        # Stored data: index (numerical starting from 0), position (tuple coordinates), atom type (atomic symbol and assignment in LAMMPS)
+        for index, carbon_coord in enumerate(coordinates):
+            graph.add_node(index, pos=carbon_coord, type=['C','1'])
 
-        # Add edges based on the bond length
+        # Add edges between all atoms within a C-C bond length of each other (including buffer space)
         for i in range(len(coordinates)):
             for j in range(i + 1, len(coordinates)):
                 if sum((float(coordinates[i][k]) - float(coordinates[j][k]))**2 for k in range(len(coordinates[i])))**0.5 <= (self.CC + 0.01):

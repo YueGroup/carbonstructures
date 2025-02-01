@@ -1,5 +1,5 @@
-# dictionary of bond lengths and angles for common functional groups
-# data are obtained from Computational Chemistry Comparison and Benchmark Database by NIST  https://cccbdb.nist.gov/expbondlengths1x.asp
+# Dictionary of bond lengths and angles for common functional groups
+# Data are obtained from Computational Chemistry Comparison and Benchmark Database by NIST  https://cccbdb.nist.gov/expbondlengths1x.asp
 __all__ = ['grpdata']
 
 grpdata = {
