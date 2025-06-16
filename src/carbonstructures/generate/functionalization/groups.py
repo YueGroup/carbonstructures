@@ -40,7 +40,7 @@ grpdata = {
     'CH3': {
         'atoms': 4,
         'CC': {
-            'added_atom': ['C', '1'],
+            'added_atom': ['C', '4'],
             'length': 1.418,
             'angle': 0,
             'dihedral': 0,
@@ -71,7 +71,7 @@ grpdata = {
     'COOH': {
         'atoms': 4,
         'CC': {
-            'added_atom': ['C', '1'],
+            'added_atom': ['C', '4'],
             'length': 1.418,
             'angle': 0,
             'dihedral': 0,
