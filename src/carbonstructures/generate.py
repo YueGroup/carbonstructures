@@ -198,8 +198,8 @@ def main():
                         fdata.write('{} {} xlo xhi\n'.format(xlo, xhi))
                         fdata.write('{} {} ylo yhi\n'.format(ylo, yhi))
                         fdata.write('{} {} zlo zhi\n'.format(zlo, zhi))
-                        fdata.write('\nAtoms\n\n')
-
+                        fdata.write('\n')
+                        
                         # Build final list: C1 -> F1 -> C2 -> F2
                         final_nodes = wall1_carbons + wall1_functionals + wall2_carbons + wall2_functionals
                         #print(wall1_functionals)

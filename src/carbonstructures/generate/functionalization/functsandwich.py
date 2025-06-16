@@ -160,4 +160,23 @@ def functsandwich(coord_graph):
 
     mod_coord_graph = copy.deepcopy(coord_graph)
     mod_coord_graph = attach_group(mod_coord_graph, grp, mod_indices)
+
+    # ─── Re‐assign the sheet carbons in mod_indices to a new type ─────────
+    # 1) Flatten mod_indices so we only have ints
+    flat_mod_indices = []
+    for i in mod_indices:
+        if isinstance(i, (list, tuple)):
+            flat_mod_indices.extend(i)
+        else:
+            flat_mod_indices.append(i)
+   
+    # 2) Pick a fresh type number
+    existing_ids = [int(t[1]) for _, t in mod_coord_graph.nodes(data='type')]
+    new_id = max(existing_ids) + 1
+
+    # 3) Rename those sheet carbons
+    for idx in flat_mod_indices:
+        mod_coord_graph.nodes[idx]['type'] = ['C_sheet_func', str(new_id)]
+
+    # ───────────────────────────────────────────────────────────────────────
     return mod_coord_graph

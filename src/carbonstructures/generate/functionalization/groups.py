@@ -23,7 +23,7 @@ grpdata = {
     'CO': {
         'atoms': 2,
         'CC': {
-            'added_atom': ['C', '4'], #change carbon number here if needed
+            'added_atom': ['C_CO', '4'], #change carbon number here if needed
             'length': 1.418,
             'angle': 0,
             'dihedral': 0,
@@ -40,7 +40,7 @@ grpdata = {
     'CH3': {
         'atoms': 4,
         'CC': {
-            'added_atom': ['C', '4'],   #change carbon number here if needed
+            'added_atom': ['C_CH3', '4'],   #change carbon number here if needed
             'length': 1.418,
             'angle': 0,
             'dihedral': 0,
@@ -71,7 +71,7 @@ grpdata = {
     'COOH': {
         'atoms': 4,
         'CC': {
-            'added_atom': ['C', '4'],       #change carbon number here if needed
+            'added_atom': ['C_COOH', '4'],       #change carbon number here if needed
             'length': 1.418,
             'angle': 0,
             'dihedral': 0,
