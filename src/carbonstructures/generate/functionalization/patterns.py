@@ -43,7 +43,7 @@ def pctrandsandwich(networkC,pct):
     # randomly selected carbons with user-specified percent coverage (for sandwich)
     prcarbons1 = []
     prcarbons2 = []
-    print(networkC.number_of_nodes() / 2)
+    # print(networkC.number_of_nodes() / 2)
     pctcoverage = pct / 100
     numC =  m.floor(pctcoverage * (networkC.number_of_nodes() / 2))
     while len(prcarbons1) < numC:

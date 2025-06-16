@@ -115,7 +115,8 @@ def main():
         2. XYZ (.xyz)\n")
 
         # Select graph nodes as list of coordinates. Loop until valid file format is chosen
-        nodes = list(coordinates.nodes(data=True))
+        # nodes = list(coordinates.nodes(data=True)) #for functionalized sheets, box should fit the (unfuctionalized) sheet with no gaps
+        nodes = list(carbons.nodes(data=True))
         bounds = get_min_max(nodes)
         # print("bounds line 123:" + str(bounds))
         # print("xlo line 123:" + str(bounds['min_x']))
@@ -199,7 +200,7 @@ def main():
                         fdata.write('{} {} ylo yhi\n'.format(ylo, yhi))
                         fdata.write('{} {} zlo zhi\n'.format(zlo, zhi))
                         fdata.write('\n')
-                        
+
                         # Build final list: C1 -> F1 -> C2 -> F2
                         final_nodes = wall1_carbons + wall1_functionals + wall2_carbons + wall2_functionals
                         #print(wall1_functionals)
