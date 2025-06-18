@@ -115,9 +115,9 @@ def main():
         2. XYZ (.xyz)\n")
 
         # Select graph nodes as list of coordinates. Loop until valid file format is chosen
-        # nodes = list(coordinates.nodes(data=True)) #for functionalized sheets, box should fit the (unfuctionalized) sheet with no gaps
-        nodes = list(carbons.nodes(data=True))
-        bounds = get_min_max(nodes)
+        nodes = list(coordinates.nodes(data=True)) 
+        sheet_nodes = list(carbons.nodes(data=True))
+        bounds = get_min_max(sheet_nodes)         #for functionalized sheets, box should fit the (unfuctionalized) sheet with no gaps
         # print("bounds line 123:" + str(bounds))
         # print("xlo line 123:" + str(bounds['min_x']))
         format = input()
@@ -131,7 +131,6 @@ def main():
             print("How many total atom types will be in your simulation?\n")
             atypes = input()
 
-            # Prompt for whether water is present
             # Prompt for whether water is present
             while True:
                 ans = input("Will there be water in your simulation? Enter Y or N.\n").strip().lower()
