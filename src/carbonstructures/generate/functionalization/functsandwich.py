@@ -1,7 +1,7 @@
 import math
 import networkx as nx
 import copy
-from .patterns import truerandsheet, pctrandsandwich, restrandsheet
+from .patterns import truerandsandwich, pctrandsandwich, restrandsandwich
 from .groups import grpdata
 
 __all__ = ['functsandwich']
@@ -133,17 +133,17 @@ def functsandwich(coord_graph):
     
     # Prompt user to select a functionalization pattern
     print("What functionalization pattern would you like to use? Type 'patterns' to see all supported patterns.\n        1. True Random\n        2. Random - Percent Coverage\n        3. Random - Restricted Coverage\n")
-    patternlist = [truerandsheet, pctrandsandwich, restrandsheet]
+    patternlist = [truerandsandwich, pctrandsandwich, restrandsandwich]
     pattern = input().strip()
     
     # Loop until valid pattern is chosen
-    while pattern != '2':
-        if pattern in ['1','3']:
-            print("This feature is incomplete. Please try again.\n")
-        else: 
+    while pattern not in ['1', '2', '3']:
+        if pattern == 'patterns':
+            print("Supported patterns:\n 1. True Random\n 2. Random - Percent Coverage\n 3. Random - Restricted Coverage\n")
+        else:
             print("Input not recognized! Please try again.\n")
         pattern = input().strip()
-    
+
     # Get list of carbon indices to functionalize
     if pattern == '2':
         while True:
