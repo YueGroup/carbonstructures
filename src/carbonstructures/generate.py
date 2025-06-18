@@ -189,7 +189,7 @@ def main():
                     #Write each position 
                     for index,data in nodes:
                         fdata.write('{} 1 {} 0 {} {} {}\n'.format(index+1,data['type'][1],*data['pos']))
-                    print("wrote line 164")
+                    # print("wrote line 164")
 
             elif system == '2':
                     with open(name + '.data','w') as fdata:
@@ -287,7 +287,9 @@ def main():
         elif format == '2':
             with open(name + '.xyz','w') as fdata:
                 fdata.write('{}\n\n'.format(coordinates.number_of_nodes()))
-                for index,data in nodes:
+                atoms = list(coordinates.nodes(data=True))
+                for index,data in atoms:
+                    pos = data['pos']
                     fdata.write('{} {:.6f} {:.6f} {:.6f}\n'.format(data['type'][0],*data['pos']))
 
     # Exits the script any time user attempts a keyboard interrupt (Ctrl + C)
