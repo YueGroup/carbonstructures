@@ -103,6 +103,9 @@ def main():
         # Stores unfunctionalized coordinate graph as 'coordinates'
         elif willfunct == 'N':
                 coordinates = carbons
+                # Ensure all positions are float tuples
+                for _, data in coordinates.nodes(data=True):
+                    data['pos'] = tuple(map(float, data['pos']))
 
 
         # Prompt user for file name
@@ -186,8 +189,11 @@ def main():
                     fdata.write('Atoms\n\n')
 
                     #Write each position 
-                    for index,data in nodes:
-                        fdata.write('{} 1 {} 0 {} {} {}\n'.format(index+1,data['type'][1],*data['pos']))
+                    # Write each position (ensuring string-type positions are converted to float)
+                    for index, data in nodes:
+                        x, y, z = map(float, data['pos'])
+                        fdata.write('{} 1 {} 0 {:.6f} {:.6f} {:.6f}\n'.format(index + 1, data['type'][1], x, y, z))
+
                     # print("wrote line 164")
 
             elif system == '2':
@@ -200,8 +206,13 @@ def main():
                         fdata.write('{} {} zlo zhi\n'.format(zlo, zhi))
                         fdata.write('\n')
 
-                        # Build final list: C1 -> F1 -> C2 -> F2
-                        final_nodes = wall1_carbons + wall1_functionals + wall2_carbons + wall2_functionals
+                        if willfunct.upper() == 'Y':
+                            # Build final list: C1 -> F1 -> C2 -> F2
+                            final_nodes = wall1_carbons + wall1_functionals + wall2_carbons + wall2_functionals
+                            print("Final node funct: " + str(final_nodes))
+                        else:
+                            final_nodes = list(coordinates.nodes(data=True))
+                            print("Final node unfuct: " + str(final_nodes))
                         #print(wall1_functionals)
                         #print(wall2_functionals)
                         # Write Atoms section:
