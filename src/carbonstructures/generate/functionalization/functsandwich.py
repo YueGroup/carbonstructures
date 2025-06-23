@@ -145,7 +145,7 @@ def functsandwich(coord_graph):
         pattern = input().strip()
 
     # Get list of carbon indices to functionalize
-    if pattern in ['2','4']:
+    if pattern in ['2', '4']:
         while True:
             pct_input = input("Please specify a coverage percentage: ")
             try:
@@ -154,7 +154,11 @@ def functsandwich(coord_graph):
             except ValueError:
                 print("That's not a valid number. Please try again.")
 
-        mod_indices = patternlist[int(pattern) - 1](coord_graph, cov_pct)
+        if pattern == '4':
+            # Pass the functional group name to enforce COOH-specific spacing
+            mod_indices = patternlist[int(pattern) - 1](coord_graph, cov_pct, grp)
+        else:
+            mod_indices = patternlist[int(pattern) - 1](coord_graph, cov_pct)
     else:
         mod_indices = patternlist[int(pattern) - 1](coord_graph)
 

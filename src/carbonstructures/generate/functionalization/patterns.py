@@ -101,26 +101,43 @@ def restrandsandwich(networkC):
 
     return [rrcarbons1, rrcarbons2]
 
-def pctrestrandsandwich(networkC, pct):
+def pctrestrandsandwich(networkC, pct, grp="OH"):
     """
     Randomly select carbon atoms from both sheets of a graphene sandwich with:
       • user-defined percent coverage (pct), and
-      • no neighboring atoms allowed (restricted).
+      • neighbor exclusion rules (restricted).
+        - If grp is 'COOH', atoms must be at least 2 bonds apart.
+        - Otherwise, immediate neighbor exclusion only.
     """
+    import math as m
+    import random as r
+
     rrcarbons1 = []
     rrcarbons2 = []
     pctcoverage = pct / 100
     numC = m.floor(pctcoverage * (networkC.number_of_nodes() / 2))
 
+    def _findneighbors(graph, index):
+        return list(graph.neighbors(index))
+
+    def _find2ndneighbors(graph, index):
+        first = set(graph.neighbors(index))
+        second = set()
+        for n in first:
+            second.update(graph.neighbors(n))
+        second.discard(index)
+        return list(second)
+
     def is_disjoint(selected, index, graph):
-        neighbors = _findneighbors(graph, index)
-        return set(selected).isdisjoint(set([index] + neighbors))
+        neighbors1 = _findneighbors(graph, index)
+        neighbors2 = _find2ndneighbors(graph, index) if grp == "COOH" else []
+        forbidden = set([index] + neighbors1 + neighbors2)
+        return set(selected).isdisjoint(forbidden)
 
     # First sheet
     attempts = 0
     while len(rrcarbons1) < numC and attempts < 10 * numC:
         index = r.randint(0, int(networkC.number_of_nodes() / 2) - 1)
-        # print(f"Trying index {index}, neighbors: {_findneighbors(networkC, index)}")
         if is_disjoint(rrcarbons1, index, networkC):
             rrcarbons1.append(index)
         attempts += 1
@@ -140,5 +157,6 @@ def pctrestrandsandwich(networkC, pct):
         print(f"[Warning] Could only select {len(rrcarbons2)} out of {numC} target atoms for sheet 2 due to neighbor restrictions.")
 
     return [rrcarbons1, rrcarbons2]
+
 
 
