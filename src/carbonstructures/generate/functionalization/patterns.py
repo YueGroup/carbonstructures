@@ -106,7 +106,8 @@ def pctrestrandsandwich(networkC, pct, grp="OH"):
     Randomly select carbon atoms from both sheets of a graphene sandwich with:
       • user-defined percent coverage (pct), and
       • neighbor exclusion rules (restricted).
-        - If grp is 'COOH', atoms must be at least 2 bonds apart.
+        - If grp is "COOH","CH3","OH", or "CO", atoms must be at least 2 bonds apart.
+            - Since these are the functional groups of interest, we will keep the sparsity constant (2 bonds apart)
         - Otherwise, immediate neighbor exclusion only.
     """
     import math as m
@@ -130,7 +131,7 @@ def pctrestrandsandwich(networkC, pct, grp="OH"):
 
     def is_disjoint(selected, index, graph):
         neighbors1 = _findneighbors(graph, index)
-        neighbors2 = _find2ndneighbors(graph, index) if grp == "COOH" else []
+        neighbors2 = _find2ndneighbors(graph, index) if grp in ["COOH","CH3","OH","CO"] else []
         forbidden = set([index] + neighbors1 + neighbors2)
         return set(selected).isdisjoint(forbidden)
 
