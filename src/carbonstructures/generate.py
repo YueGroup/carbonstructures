@@ -209,10 +209,10 @@ def main():
                         if willfunct.upper() == 'Y':
                             # Build final list: C1 -> F1 -> C2 -> F2
                             final_nodes = wall1_carbons + wall1_functionals + wall2_carbons + wall2_functionals
-                            print("Final node funct: " + str(final_nodes))
+                            # print("Final node funct: " + str(final_nodes))
                         else:
                             final_nodes = list(coordinates.nodes(data=True))
-                            print("Final node unfuct: " + str(final_nodes))
+                            # print("Final node unfuct: " + str(final_nodes))
                         #print(wall1_functionals)
                         #print(wall2_functionals)
                         # Write Atoms section:
